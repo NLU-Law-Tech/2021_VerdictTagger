@@ -118,6 +118,7 @@ export class index extends Component {
     }
 
     hightLightCJText = (cj_text, reg_type) => {
+        var re_array
         if (reg_type==="bank")
         {   
 
@@ -127,7 +128,7 @@ export class index extends Component {
             // console.log(7777)
             // console.log(test)
             var re_array_2=cj_text.match(re_bank_2)
-            var re_array=cj_text.match(re_bank_1)
+            re_array=cj_text.match(re_bank_1)
             if(re_array===null && re_array_2===null)
             {
                 return;
@@ -143,12 +144,12 @@ export class index extends Component {
         else if (reg_type==='phone')
         {
             let re_phone=new RegExp("[^編帳]{1}[^ 第0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A：、警戶鑑-]{1}[ ]{0,2}([0-9]{4}[-─－—–]?[0-9]{3}[-─－—–]?[0-9]{3})[^0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A帳戶]{1}","g")
-            var re_array=cj_text.match(re_phone)
+             re_array=cj_text.match(re_phone)
         }
         else if(reg_type=== 'car')
         {
             let re_car=new RegExp("(牌照號碼|車牌號碼|車號|車牌)(號|為|：|:)?([a-zA-Z0-9]{1,5}[-─－—–][a-zA-Z0-9]{1,5})號?","g")
-            var re_array=cj_text.match(re_car)
+             re_array=cj_text.match(re_car)
         }
         if (re_array === null )
         {
@@ -177,13 +178,13 @@ export class index extends Component {
             { defendantsTagInfo } = SideMenuReducer,
             { unlabelDocId = '' } = TagReducer
         console.log('save ->', defendantsTagInfo)
-        if (unlabelDocId !== '' && Object.keys(defendantsTagInfo).length > 0) {
-            dispatch(saveLabledDataAction(unlabelDocId, defendantsTagInfo))
-        }
-        else {
-            alert("saveLabeldData error,rule not pass")
-            console.warn("saveLabeldData error,rule not pass", unlabelDocId, defendantsTagInfo)
-        }
+        // if (unlabelDocId !== '' && Object.keys(defendantsTagInfo).length > 0) {
+        //     dispatch(saveLabledDataAction(unlabelDocId, defendantsTagInfo))
+        // }
+        // else {
+        //     alert("saveLabeldData error,rule not pass")
+        //     console.warn("saveLabeldData error,rule not pass", unlabelDocId, defendantsTagInfo)
+        // }
     }
 
     requestLabeledDoc = () => {

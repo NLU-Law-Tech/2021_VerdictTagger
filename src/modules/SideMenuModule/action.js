@@ -18,3 +18,17 @@ export const updateDefendantsTagInfo = (defendantsTagInfo)=>{
         defendantsTagInfo
     }
 }
+
+export const setCurrentSelectBankAccount = (bankAccount)=>{
+    return{
+        type:'SIDE_MENU_SET_CURRENT_SELECT_BANKACCOUNT',
+        bankAccount
+    }
+}
+
+export const setBankAccount = (bankAccounts)=>{
+    return{
+        type:'SIDE_MENU_SET_BANKACCOUNT',
+        bankAccounts
+    }
+}

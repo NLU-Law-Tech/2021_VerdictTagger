@@ -23,6 +23,18 @@ function Reducer(state = initialState, action) {
         return Object.assign({},state,{
           currentSelectDefendant:action.defendant
         })
+      case 'SIDE_MENU_SET_BANKACCOUNT':
+        return Object.assign({},state,{
+          bankAccounts:action.bankAccounts
+         })
+
+      case 'SIDE_MENU_SET_CURRENT_SELECT_BANKACCOUNT':
+        return Object.assign({},state,{
+          currentSelectBankAccount:action.bankAccount
+        })
+  
+
+      
 
       default:
         return state

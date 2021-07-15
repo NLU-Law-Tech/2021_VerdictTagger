@@ -177,6 +177,7 @@ export const getUnlabelDoc = () => {
         axios.get(API_SERVER,{headers: {"Access-Control-Allow-Origin": "*"}})////"/unlabel_doc id" ,{headers: {"Access-Control-Allow-Origin": "*"}}
             .then((res) => {
                 //後端input的JSON 直接抓欄位
+                
                 let content_id=res.data._id
                 let judgement=res.data.judgement
                 //  let { verdict, content_id = '' } = res.data

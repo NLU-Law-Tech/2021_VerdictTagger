@@ -6,23 +6,23 @@ export class defendant extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            isAddingNewDefendant: false,
+            isAddingNewDefendant: false,//是否在新增的state
             currentSelectWord: {},
             selectNewDefendants: [],
-            isDelingDefendant: false,
+            isDelingDefendant: false,//是否在刪除模式
             currentKeyDown: undefined,
             _props: {}
         }
     }
-
+     
     delingDefendant = () => {
         let { isDelingDefendant } = this.state
         this.setState({
-            isDelingDefendant: !isDelingDefendant,
+            isDelingDefendant: !isDelingDefendant,//解開 use not(state)
             isAddingNewDefendant: false
         })
     }
-
+    //新增狀態(按下新增被告)
     addingNewDefendant = () => {
         let{ dispatch } = this.props
         let { isAddingNewDefendant } = this.state
@@ -109,12 +109,12 @@ export class defendant extends Component {
         return (
             <div className="card">
                 <div className="card-body">
-                    <div className="card-title"><b>被告</b></div>
+                    <div className="card-title"><b>車牌號碼</b></div>
                     <div className="card-text">
-                        <button className="mr-1" onClick={this.addingNewDefendant}>新增被告(a)</button>
-                        <button onClick={this.delingDefendant}>刪除被告(d)</button>
+                        <button className="mr-1" onClick={this.addingNewDefendant}>新增車牌(a)</button>
+                        <button onClick={this.delingDefendant}>刪除車牌(d)</button>
                         <br/>
-                        {isAddingNewDefendant ? '在文章中拖曳選擇被告' : undefined}
+                        {isAddingNewDefendant ? '在文章中拖曳選擇車牌' : undefined}
                         {isDelingDefendant ? '點選紅色被告按鈕刪除' : undefined}
                         <br />
                         <hr />
