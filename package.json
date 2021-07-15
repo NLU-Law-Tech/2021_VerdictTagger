@@ -12,7 +12,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.1",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "electron": "^10.1.2",
-    "electron-builder": "^22.8.1"
+    "electron-builder": "^22.11.8"
   },
   "main": "main.js",
   "scripts": {
@@ -54,13 +54,13 @@
       "category": "itir.law-tagger"
     },
     "extends": null,
-    "files":[
+    "files": [
       "!node_modules${/*}",
       "!src${/*}",
       "!dist${/*}"
     ],
-    "nsis":{
-      "oneClick":false
+    "nsis": {
+      "oneClick": false
     }
   }
 }
