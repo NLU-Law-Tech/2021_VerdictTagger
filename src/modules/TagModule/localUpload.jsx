@@ -15,7 +15,6 @@ export class LocalUpload extends Component {
         reader.readAsText(e.target.files[0])
         reader.onload = async (e) => { 
           const text = (e.target.result)
-          console.log(text)
           dispatch({
             type: "TAG_GET_UNLABEL_DOC_SUCCESS",
             unlabelDocId: fileName,

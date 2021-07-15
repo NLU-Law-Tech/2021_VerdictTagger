@@ -8,7 +8,7 @@ let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
 
 
 if (process.env.NODE_ENV !== 'production' && REACT_APP_LOCAL_MODE === 'FALSE') {
-    API_SERVER = 'http://140.120.13.242:15004'
+    API_SERVER = 'http://140.120.13.245:9489/verdicts'
 }
 console.log('API_SERVER:', API_SERVER)
 
@@ -66,7 +66,7 @@ export const submitTag = (tagWordObject) => {
 
 export const delDoc = (doc_id) => {
     return (dispatch) => {
-        axios.get(API_SERVER + '/del/' + doc_id)
+        axios.get(API_SERVER,{headers: {"Access-Control-Allow-Origin": "*"}} )//+ '/del/' + doc_id
             .then(() => {
                 dispatch({
                     type: "TAG_DEL_DOC_SCUUESS"
@@ -86,7 +86,7 @@ export const getReLableDoc = () => {
     return (dispatch) => {
         dispatch(initApp())
         dispatch({ type: "TAG_GET_RELABEL_DOC_START" })
-        axios.get(API_SERVER + "/relabel_doc")
+        axios.get(API_SERVER,{headers: {"Access-Control-Allow-Origin": "*"}} )//+ "/relabel_doc"
             .then((res) => {
                 let { verdict, content_id = '', labeled_data = [] } = res.data
                 console.log(res.data)
@@ -170,25 +170,28 @@ export const getReLableDoc = () => {
 }
 
 export const getUnlabelDoc = () => {
-    // let unlabelDoc = '福建高等法院金門分院刑事裁定　　　　　 100年度聲字第10號\n聲　請　人\n即　被　告　許丕燕\n上列聲請人即被告因違反毒品危害防制條例罪案件（本院99年度\n上重訴字第2 號違反毒品危害防制條例罪案件），聲請具保停止\n羈押，本院裁定如下：\n主  文\n聲請駁回。'
+     
     return (dispatch) => {
         dispatch(initApp())
         dispatch({ type: "TAG_GET_UNLABEL_DOC_START" })
-        axios.get(API_SERVER + "/unlabel_doc")
+        axios.get(API_SERVER,{headers: {"Access-Control-Allow-Origin": "*"}})////"/unlabel_doc id" ,{headers: {"Access-Control-Allow-Origin": "*"}}
             .then((res) => {
-                let { verdict, content_id = '' } = res.data
-                console.log(res.data)
-                verdict = JSON.parse(verdict)
-                let { judgement } = verdict
-
+                //後端input的JSON 直接抓欄位
+                let content_id=res.data._id
+                let judgement=res.data.judgement
+                //  let { verdict, content_id = '' } = res.data
+                // console.log(res.data)
+                // verdict = JSON.parse(verdict)
+                // let { judgement } = verdict
+                 
                 dispatch({
-                    type: "TAG_GET_UNLABEL_DOC_SUCCESS",
+                     type: "TAG_GET_UNLABEL_DOC_SUCCESS",
                     unlabelDocId: content_id,
-                    unlabelDoc: judgement,
+                   unlabelDoc:judgement ,
                 })
             })
             .catch((error) => {
-                // console.log(error.response)
+                 console.log(error.response)
                 let { response = {} } = error,
                     { status = -1 } = response
                 if (status === 403) {
@@ -196,6 +199,7 @@ export const getUnlabelDoc = () => {
                 }
                 else if (status === -1) {
                     alert("伺服器連線失敗")
+                    
                 }
             })
     }
