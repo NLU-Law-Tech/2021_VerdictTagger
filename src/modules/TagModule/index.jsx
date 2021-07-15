@@ -10,7 +10,7 @@ const TagBlockFront = styled.pre`
     position: absolute;
     top:0px;
     font-size:${(props) => props.fontSize};
-    & > mark{
+    & > span{
         padding: 0px !important;
         background-color:${(props) => props.markColor};
         opacity:${(props) => props.opacity === undefined ? '0.5' : props.opacity};
@@ -117,14 +117,56 @@ export class index extends Component {
         }
     }
 
-    hightLightCJText = (cj_text, hlList = []) => {
-        // console.log(cj_text)
-        hlList.forEach((hlText) => {
+    hightLightCJText = (cj_text, reg_type) => {
+        if (reg_type==="bank")
+        {   
+
+            let re_bank_1=new RegExp("(.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)(.{0,5})(帳號|帳戶|│)?(?:(?!年|元|月|萬|千|百|第)\\w)(.{0,11})(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{3,15}(.{0,9})(帳戶|存簿)","g");
+            let re_bank_2=new RegExp("(.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)+(.{0,20})(帳號|帳戶|局號|│|卡號)(.{0,10})(?:(?!年|元|月|萬|千|百)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百)\\w)[0-9]{3,15}(?:(?!年|元|月|萬|千|百)\\w)(號)?(帳戶)?(、)?[0-9]*","g")
+            // var test=/(.{0,30})高雄銀行帳號00/g.exec(cj_text)
+            // console.log(7777)
+            // console.log(test)
+            var re_array_2=cj_text.match(re_bank_2)
+            var re_array_1=cj_text.match(re_bank_1)
+            if(re_array_1===null && re_array_2===null)
+            {
+                return;
+            }
+            
+            if(re_array_2 !== null)
+            {
+                var re_array=re_array_1.concat(re_array_2);
+            }
+            // console.log(re_array_1);
+            
+        }
+        else if (reg_type==='phone')
+        {
+            let re_phone=new RegExp("[^編帳]{1}[^ 第0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A：、警戶鑑-]{1}[ ]{0,2}([0-9]{4}[-─－—–]?[0-9]{3}[-─－—–]?[0-9]{3})[^0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A帳戶]{1}","g")
+            var re_array=cj_text.match(re_phone)
+        }
+        else if(reg_type=== 'car')
+        {
+            let re_car=new RegExp("(牌照號碼|車牌號碼|車號|車牌)(號|為|：|:)?([a-zA-Z0-9]{1,5}[-─－—–][a-zA-Z0-9]{1,5})號?","g")
+            var re_array=cj_text.match(re_car)
+        }
+        if (re_array === null )
+        {
+            return;
+        }
+        // console.log(re_array)
+        // console.log('------------------')
+        // console.log(cj_text.substr(14750,100))
+        re_array.forEach((hlText) => {
             if (hlText !== '') {
+                // console.log(hlText)
+                // console.log('------------------')
                 let re = new RegExp(hlText, "g");
-                cj_text = cj_text.replace(re, `<mark>${hlText}</mark>`)
+                // console.log(cj_text.substr(14751,14760))
+                cj_text = cj_text.replaceAll(re, `<span >${hlText}</span>`)
             }
         })
+        
         return cj_text
     }
 
@@ -208,10 +250,10 @@ export class index extends Component {
         let { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
             { defendants } = SideMenuReducer,
             { identitylist, positionList } = TagReducer
-        let cj_text_defendants_hl = this.hightLightCJText(cj_text, defendants)
-        let cj_text_identitylist_hl = this.hightLightCJText(cj_text, identitylist)
-        let cj_text_positionList_hl = this.hightLightCJText(cj_text, positionList)
-        let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
+        let cj_text_defendants_hl = this.hightLightCJText(cj_text, "bank")
+        let cj_text_identitylist_hl = this.hightLightCJText(cj_text, "car")
+        let cj_text_positionList_hl = this.hightLightCJText(cj_text, "phone")
+        // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
 
         let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
@@ -251,32 +293,32 @@ export class index extends Component {
 
                         {/* 身份HL */}
                         <TagBlockFront
-                            fontSize={`${fontSize}px`}
-                            markColor={'cyan'}
-                            opacity={'0.25'}
-                            dangerouslySetInnerHTML={{
-                                __html: cj_text_identitylist_hl
-                            }}
+                           fontSize={`${fontSize}px`}
+                           markColor={'cyan'}
+                           opacity={'0.25'}
+                           dangerouslySetInnerHTML={{
+                               __html: cj_text_identitylist_hl
+                           }}
                         />
 
                         {/* 職稱HL */}
                         <TagBlockFront
-                            fontSize={`${fontSize}px`}
-                            markColor={'green'}
-                            opacity={'0.25'}
-                            dangerouslySetInnerHTML={{
-                                __html: cj_text_positionList_hl
-                            }}
+                           fontSize={`${fontSize}px`}
+                           markColor={'green'}
+                           opacity={'0.25'}
+                           dangerouslySetInnerHTML={{
+                               __html: cj_text_positionList_hl
+                           }}
                         />
 
                         {/* 法條HL */}
                         <TagBlockFront
-                            fontSize={`${fontSize}px`}
-                            markColor={'purple'}
-                            opacity={'0.15'}
-                            dangerouslySetInnerHTML={{
-                                __html: cj_text_law_hl
-                            }}
+                          //  fontSize={`${fontSize}px`}
+                          //  markColor={'purple'}
+                          //  opacity={'0.15'}
+                          //  dangerouslySetInnerHTML={{
+                           //     __html: cj_text_law_hl
+                          //  }}
                         />
 
                         {/* Tagging onMouseUp */}
