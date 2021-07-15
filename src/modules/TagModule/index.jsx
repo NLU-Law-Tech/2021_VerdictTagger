@@ -127,15 +127,15 @@ export class index extends Component {
             // console.log(7777)
             // console.log(test)
             var re_array_2=cj_text.match(re_bank_2)
-            var re_array_1=cj_text.match(re_bank_1)
-            if(re_array_1===null && re_array_2===null)
+            var re_array=cj_text.match(re_bank_1)
+            if(re_array===null && re_array_2===null)
             {
                 return;
             }
             
-            if(re_array_2 !== null)
+            if(re_array_2!==null && re_array !==null)
             {
-                var re_array=re_array_1.concat(re_array_2);
+                re_array=re_array.concat(re_array_2);
             }
             // console.log(re_array_1);
             
