@@ -160,8 +160,8 @@ export class index extends Component {
         // console.log(cj_text.substr(14750,100))
         re_array.forEach((hlText) => {
             if (hlText !== '') {
-                // console.log(hlText)
-                // console.log('------------------')
+                console.log(hlText)
+                console.log('------------------')
                 let re = new RegExp(hlText, "g");
                 // console.log(cj_text.substr(14751,14760))
                 cj_text = cj_text.replaceAll(re, `<span >${hlText}</span>`)
