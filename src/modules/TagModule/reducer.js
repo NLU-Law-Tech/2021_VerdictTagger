@@ -1,7 +1,10 @@
+import { act } from "react-dom/test-utils"
+
 const initialState = {
   currentSelectWord: {},
   unlabelDoc: '',
   unlabelDocId: '',
+  unlabelDocHl: '',
   identitylist: [],
   positionList: [],
   ready:false
@@ -29,6 +32,7 @@ function Reducer(state = initialState, action) {
       return Object.assign({}, state, {
         unlabelDocId: action.unlabelDocId,
         unlabelDoc: action.unlabelDoc,
+        unlabelDocHl:action.unlabelDocHl,
         ready:true
       })
 

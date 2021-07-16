@@ -117,7 +117,7 @@ export class index extends Component {
         }
     }
 
-    hightLightCJText = (cj_text, reg_type) => {
+    hightLightCJText = (cj_text, reg_type,highlights) => {
         var re_array
         if (reg_type==="bank")
         {   
@@ -155,16 +155,28 @@ export class index extends Component {
         {
             return;
         }
-        // console.log(re_array)
-        // console.log('------------------')
-        // console.log(cj_text.substr(14750,100))
         re_array.forEach((hlText) => {
             if (hlText !== '') {
-                console.log(hlText)
-                console.log('------------------')
                 let re = new RegExp(hlText, "g");
-                // console.log(cj_text.substr(14751,14760))
-                cj_text = cj_text.replaceAll(re, `<span >${hlText}</span>`)
+                for(var i=0;i<highlights.length;i++)
+                {
+                    let contain=hlText.includes(highlights[i].value)
+                    console.log(contain)
+                    if(contain===true)
+                    {
+                        
+                        var certain_text=highlights[i].value
+                        console.log("contain",certain_text)
+                        console.log(hlText)
+                        console.log('------------------')
+                        hlText=hlText.replace(certain_text,`<span>${certain_text}</span>`)
+                        console.log(hlText)
+                        console.log(777777777777777777777)
+                        cj_text = cj_text.replace(re,hlText)
+                    }
+                }
+                
+                // cj_text = cj_text.replace(re,hlText)
             }
         })
         
@@ -247,13 +259,17 @@ export class index extends Component {
     }
 
     render() {
+
         let { cj_text, fontSize } = this.state
+        // console.log(7777777777777)
+        // console.log(this.props.state)
+        // console.log(7777777777777)
         let { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
             { defendants } = SideMenuReducer,
-            { identitylist, positionList } = TagReducer
-        let cj_text_defendants_hl = this.hightLightCJText(cj_text, "bank")
-        let cj_text_identitylist_hl = this.hightLightCJText(cj_text, "car")
-        let cj_text_positionList_hl = this.hightLightCJText(cj_text, "phone")
+            { unlabelDocHl } = TagReducer
+        let cj_text_defendants_hl = this.hightLightCJText(cj_text, "bank", unlabelDocHl)
+        let cj_text_identitylist_hl = this.hightLightCJText(cj_text, "car", unlabelDocHl)
+        let cj_text_positionList_hl = this.hightLightCJText(cj_text, "phone", unlabelDocHl)
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
 
@@ -314,12 +330,12 @@ export class index extends Component {
 
                         {/* 法條HL */}
                         <TagBlockFront
-                          //  fontSize={`${fontSize}px`}
-                          //  markColor={'purple'}
-                          //  opacity={'0.15'}
-                          //  dangerouslySetInnerHTML={{
-                           //     __html: cj_text_law_hl
-                          //  }}
+                        //    fontSize={`${fontSize}px`}
+                        //    markColor={'purple'}
+                        //    opacity={'0.15'}
+                        //    dangerouslySetInnerHTML={{
+                        //        __html: cj_text_law_hl
+                        //    }}
                         />
 
                         {/* Tagging onMouseUp */}

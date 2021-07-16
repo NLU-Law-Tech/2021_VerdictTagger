@@ -180,13 +180,15 @@ export const getUnlabelDoc = () => {
                 
                 let content_id=res.data._id
                 let judgement=res.data.judgement
+                let highlight=res.data.highlight
                 //  let { verdict, content_id = '' } = res.data
-                // console.log(res.data)
+
                 // verdict = JSON.parse(verdict)
                 // let { judgement } = verdict
                  
                 dispatch({
                      type: "TAG_GET_UNLABEL_DOC_SUCCESS",
+                     unlabelDocHl: highlight,
                     unlabelDocId: content_id,
                    unlabelDoc:judgement ,
                 })
