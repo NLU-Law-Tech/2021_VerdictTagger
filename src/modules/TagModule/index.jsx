@@ -267,9 +267,9 @@ export class index extends Component {
         let { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
             { defendants } = SideMenuReducer,
             { unlabelDocHl } = TagReducer
-        let cj_text_defendants_hl = this.hightLightCJText(cj_text, "bank", unlabelDocHl)
-        let cj_text_identitylist_hl = this.hightLightCJText(cj_text, "car", unlabelDocHl)
-        let cj_text_positionList_hl = this.hightLightCJText(cj_text, "phone", unlabelDocHl)
+        let cj_text_bank_hl = this.hightLightCJText(cj_text, "bank", unlabelDocHl)
+        let cj_text_car_hl = this.hightLightCJText(cj_text, "car", unlabelDocHl)
+        let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", unlabelDocHl)
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
 
@@ -304,7 +304,7 @@ export class index extends Component {
                             markColor={'yellow'}
                             opacity={'0.5'}
                             dangerouslySetInnerHTML={{
-                                __html: cj_text_defendants_hl
+                                __html: cj_text_bank_hl
                             }}
                         />
 
@@ -314,7 +314,7 @@ export class index extends Component {
                            markColor={'cyan'}
                            opacity={'0.25'}
                            dangerouslySetInnerHTML={{
-                               __html: cj_text_identitylist_hl
+                               __html: cj_text_car_hl
                            }}
                         />
 
@@ -324,7 +324,7 @@ export class index extends Component {
                            markColor={'green'}
                            opacity={'0.25'}
                            dangerouslySetInnerHTML={{
-                               __html: cj_text_positionList_hl
+                               __html: cj_text_phone_hl
                            }}
                         />
 

@@ -240,7 +240,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo) => {
                     start: 0,
                     end: 0
                 },
-                units,
+                units,//每個也都向上面的name一樣有3個欄位
                 positions,
                 identities,
                 laws
