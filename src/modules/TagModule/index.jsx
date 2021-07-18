@@ -69,10 +69,17 @@ export class index extends Component {
     }
 
     delDocOnclick = () => {
-        let { dispatch } = this.props,
-            { TagReducer = {} } = this.props.state,
-            { unlabelDocId = '' } = TagReducer
-        dispatch(delDoc(unlabelDocId))
+        // let { dispatch } = this.props,
+        //     { TagReducer = {} } = this.props.state,
+        //     { unlabelDocId = '' } = TagReducer
+        // dispatch(delDoc(unlabelDocId))
+        var whyWrong=prompt("請輸入此篇判決書出錯的原因")
+        if(whyWrong!=="" && whyWrong!==null){
+            alert("了解")
+        }
+        else{
+            alert("您尚未輸入 請重新輸入一次")
+        }
     }
 
     exportLabeledDoc = () => {
@@ -292,7 +299,7 @@ export class index extends Component {
                 <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
                 <button className="mr-1" onClick={this.getNextDoc}>下一篇(n)</button>
                 <button className="mr-1" onClick={this.exportLabeledDoc}>匯出本篇標註結果(t)</button>
-                <button className="float-right btn-danger" onClick={this.delDocOnclick}>撤銷本篇</button>
+                <button className="float-right btn-danger" onClick={this.delDocOnclick}>回報本篇錯誤</button>
                 <hr />
                 {cj_text === '' ?
                     <small>載入中</small>
