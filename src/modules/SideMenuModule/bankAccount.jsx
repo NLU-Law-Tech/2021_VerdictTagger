@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { setCurrentSelectBankAccount, setBankAccount } from './action'
+import { setCurrentSelectBankAccount, setBankAccounts } from './action'
 
 export class bankAccount extends Component {
     constructor(props) {
@@ -43,12 +43,12 @@ export class bankAccount extends Component {
             selectNewBankAccounts
         })
         dispatch(setCurrentSelectBankAccount(undefined))
-        dispatch(setBankAccount(selectNewBankAccount))
+        dispatch(setBankAccounts(selectNewBankAccounts))
     }
 
-    setSelectBankAccount = (BankAccount) => {
+    setSelectBankAccount = (bankAccount) => {
         let { dispatch } = this.props
-        dispatch(setCurrentSelectBankAccount(BankAccount))
+        dispatch(setCurrentSelectBankAccount(bankAccount))
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
@@ -57,18 +57,18 @@ export class bankAccount extends Component {
             { dispatch } = props
 
         // update with new props
-        if(props.state.SideMenuReducer.BankAccounts !== nextProps.state.SideMenuReducer.BankAccounts){
+        if(props.state.SideMenuReducer.BankAccounts !== nextProps.state.SideMenuReducer.bankAccounts){
             this.setState({
-                selectNewBankAccounts:nextProps.state.SideMenuReducer.BankAccounts
+                selectNewBankAccounts:nextProps.state.SideMenuReducer.bankAccounts
             })
         }
 
         // catch new select
         if (state.isAddingNewBankAccount === true && (props.state.TagReducer.currentSelectWord !== nextProps.state.TagReducer.currentSelectWord)) {
             state.selectNewBankAccounts.push(nextProps.state.TagReducer.currentSelectWord.val)
-            dispatch(setBankAccount(state.selectNewBankAccounts))
+            dispatch(setBankAccounts(state.selectNewBankAccounts))
             this.setState({
-                isAddingNewBankAccounts: false,
+                isAddingNewBankAccount: false,
                 selectNewBankAccounts:state.selectNewBankAccounts
             })
         }

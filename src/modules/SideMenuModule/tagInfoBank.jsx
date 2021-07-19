@@ -1,24 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import { updateDefendantsTagInfo } from './action'
+//import { updateBankAccountsTagInfo } from './action'
 
-let ACTION_TAGS = ['被告', '車種']
-let HOT_KEYS = ['q','w','e','r']
-export class tagInfo extends Component {
+let ACTION_TAGS = ['被告', '帳戶','分行']
+let HOT_KEYS = ['q','w','e']
+export class tagInfoBank extends Component {
     constructor(props) {
         super(props)
         this.state = {
             currentSelectWord: undefined,
-            defendants: [],
-            defendantsTagInfo: {},
+            bankAccount: [],
+            bankAccountsTagInfo: {},
             tagAction: ACTION_TAGS[0],
-            // firstUpdate:true
+            //firstUpdate:true
         }
     }
 
     static getDerivedStateFromProps(props, state) {
         let { SideMenuReducer = {}, TagReducer={}, MainReducer } = props.state,
-            { defendants = [], currentSelectDefendant } = SideMenuReducer,
+            { bankAccounts = [], currentSelectBankAccount } = SideMenuReducer,
             { currentSelectWord } = TagReducer,
             { currentKeyDown } = MainReducer
         
@@ -26,37 +26,41 @@ export class tagInfo extends Component {
         // let { dispatch } = props
 
         // 被告變動
-        let defendantsTagInfo = state.defendantsTagInfo
-        if (defendants !== state.defendants) {
+        let bankAccountsTagInfo = state.bankAccountsTagInfo
+        if (bankAccounts !== state.bankAccounts) {
             // 檢查字典中是否已有初值，若無則新增
-            for (let i = 0; i < defendants.length; i++) {
-                let defendant = defendants[i]
+            for (let i = 0; i < bankAccounts.length; i++) {
+                let bankAccount = bankAccounts[i]
                 // console.log(defendant)
-                if (defendant in defendantsTagInfo !== true) {
-                    defendantsTagInfo[`${defendant}`] = {}
+                if (bankAccount in bankAccountsTagInfo !== true) {
+                    bankAccountsTagInfo[`${bankAccount}`] = {}
                     ACTION_TAGS.forEach((ACTION_TAG) => {
-                        defendantsTagInfo[`${defendant}`][`${ACTION_TAG}`] = []
+                        bankAccountsTagInfo[`${bankAccount}`][`${ACTION_TAG}`] = []
                     })
                 }
             }
 
             // 檢查字典中是否有應該被刪除的
-            for (let i = 0; i < Object.keys(defendantsTagInfo).length; i++) {
-                let key = Object.keys(defendantsTagInfo)[i]
+            for (let i = 0; i < Object.keys(bankAccountsTagInfo).length; i++) {
+                let key = Object.keys(bankAccountsTagInfo)[i]
                 // console.log(key)
-                if (!defendants.includes(key)) {
-                    delete defendantsTagInfo[`${key}`]
+                if (!bankAccounts.includes(key)) {
+                    delete bankAccountsTagInfo[`${key}`]
                 }
             }
         }
 
         // 新選擇資訊進入
-        if (typeof (currentSelectDefendant) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
-            defendantsTagInfo[`${currentSelectDefendant}`][`${state.tagAction}`].push(currentSelectWord)
+        if(typeof (tagAction)==='undefined'){
+            var alert='請選擇項目再進行標記'
+            console.log(alert)
+         }
+        else if (typeof (currentSelectBankAccount) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
+            bankAccountsTagInfo[`${currentSelectBankAccount}`][`${state.tagAction}`].push(currentSelectWord)
         }
 
         // hot key
-        if(typeof (currentSelectDefendant) !== 'undefined' && currentKeyDown !== state.currentKeyDown){
+        if(typeof (currentSelectBankAccount) !== 'undefined' && currentKeyDown !== state.currentKeyDown){
             try {
                 if(HOT_KEYS.includes(currentKeyDown)){
                     let actionIndex = HOT_KEYS.indexOf(currentKeyDown)
@@ -67,28 +71,14 @@ export class tagInfo extends Component {
             }
         }
 
-        //save defendantsTagInfo
-        // if(state.firstUpdate){
-        //     return {
-        //         tagAction,
-        //         currentKeyDown,
-        //         defendants: [...defendants],
-        //         currentSelectWord,
-        //         defendantsTagInfo:SideMenuReducer.defendantsTagInfo,
-        //         _props: props
-        //     }
-        // }
-        // if(state.defendantsTagInfo !== SideMenuReducer.defendantsTagInfo){
-        //     dispatch(updateDefendantsTagInfo(SideMenuReducer.defendantsTagInfo))
-        // }
-
+   
         
         return {
             tagAction,
             currentKeyDown,
-            defendants: [...defendants],
+            bankAccounts: [...bankAccounts],
             currentSelectWord,
-            defendantsTagInfo:SideMenuReducer.defendantsTagInfo,
+            bankAccountsTagInfo:SideMenuReducer.bankAccountsTagInfo,
             _props: props
         }
     }
@@ -99,27 +89,27 @@ export class tagInfo extends Component {
         })
     }
 
-    delActionTagElement = (defendant, actionTag, val) => {
-        let { defendantsTagInfo } = this.state
+    delActionTagElement = (bankAccount, actionTag, val) => {
+        let { bankAccountsTagInfo } = this.state
         // console.log(defendant, actionTag, val)
         // console.log(defendantsTagInfo)
-        defendantsTagInfo[`${defendant}`][`${actionTag}`] = defendantsTagInfo[`${defendant}`][`${actionTag}`].filter((option) => {
+        bankAccountsTagInfo[`${bankAccount}`][`${actionTag}`] = bankAccountsTagInfo[`${bankAccount}`][`${actionTag}`].filter((option) => {
             return option.val !== val
         })
         this.setState({
-            defendantsTagInfo
+            bankAccountsTagInfo
         })
     }
 
     render() {
-        let { tagAction, defendantsTagInfo } = this.state
+        let { tagAction,bankAccountsTagInfo } = this.state
         let { state = {} } = this.props,
             { SideMenuReducer = {} } = state,
-            { currentSelectDefendant } = SideMenuReducer
+            { currentSelectBankAccount } = SideMenuReducer
         // console.log(tagAction)
         return (
             <div className="card">
-                {typeof (currentSelectDefendant) === 'undefined' ?
+                {typeof (currentSelectBankAccount) === 'undefined' ?
                     <div className="card-body">
                         <div className="card-title">
                             <b>請先選擇項目</b>
@@ -130,11 +120,12 @@ export class tagInfo extends Component {
                         <div className="card-title">
                             <b>標註資訊</b>
                             <br />
-                            <small>標註車牌:{currentSelectDefendant}</small>
+                            <small>標註銀行帳號:{currentSelectBankAccount}</small>
                             <br />
                             <small>標註動作:{tagAction}</small>
                         </div>
                         <div className="card-text">
+                        <button className="m-1 btn btn-sm btn-success" onClick={() => this.setTagAction(undefined)}>Done</button>
                             {ACTION_TAGS.map((actionTag, index) => {
                                 return <button 
                                 key={index} 
@@ -142,14 +133,16 @@ export class tagInfo extends Component {
                                 onClick={() => this.setTagAction(actionTag)}>{`${actionTag}(${HOT_KEYS[index]})`}</button>
                             })}
                             <hr />
+                            
                             {ACTION_TAGS.map((actionTag, index) => {
+                                console.log(actionTag,index)
                                 return (
                                     <div key={index} className={`${tagAction === actionTag ? 'bg-light font-weight-bold' : ''}`}>
                                         {actionTag}
 
                                         <ul>
-                                            {defendantsTagInfo[`${currentSelectDefendant}`][`${actionTag}`].map((option, index) => {
-                                                return <li key={index} onClick={() => this.delActionTagElement(currentSelectDefendant, actionTag, option.val)}><button>{option.val}</button></li>
+                                            {bankAccountsTagInfo[`${currentSelectBankAccount}`][`${actionTag}`].map((option, index) => {
+                                                return <li key={index} onClick={() => this.delActionTagElement(currentSelectBankAccount, actionTag, option.val)}><button>{option.val}</button></li>
                                             })}
                                         </ul>
                                     </div>
@@ -169,4 +162,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(tagInfo)
+export default connect(mapStateToProps)(tagInfoBank)

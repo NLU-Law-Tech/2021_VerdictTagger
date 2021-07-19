@@ -14,7 +14,7 @@ export class defendant extends Component {
             _props: {}
         }
     }
-     
+  
     delingDefendant = () => {
         let { isDelingDefendant } = this.state
         this.setState({
@@ -28,7 +28,8 @@ export class defendant extends Component {
         let { isAddingNewDefendant } = this.state
         this.setState({
             isAddingNewDefendant: !isAddingNewDefendant,
-            isDelingDefendant: false
+            isDelingDefendant: false,
+          
         })
         dispatch(setCurrentSelectDefendant(undefined))
     }
@@ -111,8 +112,9 @@ export class defendant extends Component {
                 <div className="card-body">
                     <div className="card-title"><b>車牌號碼</b></div>
                     <div className="card-text">
-                        <button className="mr-1" onClick={this.addingNewDefendant}>新增車牌(a)</button>
-                        <button onClick={this.delingDefendant}>刪除車牌(d)</button>
+                        <button className="mr-2" onClick={this.addingNewDefendant}>新增車牌(a)</button>
+                        <button className="mr-2" onClick={this.delingDefendant}>刪除車牌(d)</button>
+                       
                         <br/>
                         {isAddingNewDefendant ? '在文章中拖曳選擇車牌' : undefined}
                         {isDelingDefendant ? '點選紅色被告按鈕刪除' : undefined}

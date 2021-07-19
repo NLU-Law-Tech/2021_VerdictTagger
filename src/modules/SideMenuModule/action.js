@@ -18,7 +18,7 @@ export const updateDefendantsTagInfo = (defendantsTagInfo)=>{
         defendantsTagInfo
     }
 }
-
+//bank
 export const setCurrentSelectBankAccount = (bankAccount)=>{
     return{
         type:'SIDE_MENU_SET_CURRENT_SELECT_BANKACCOUNT',
@@ -26,9 +26,37 @@ export const setCurrentSelectBankAccount = (bankAccount)=>{
     }
 }
 
-export const setBankAccount = (bankAccounts)=>{
+export const setBankAccounts = (bankAccounts)=>{
     return{
         type:'SIDE_MENU_SET_BANKACCOUNT',
         bankAccounts
+    }
+}
+export const updateBankAccountsTagInfo = (bankAccountsTagInfo)=>{
+    return{
+        type:"SIDE_MENU_UPDATE_BANKACCOUNT_TAG_INFO",
+        bankAccountsTagInfo
+    }
+}
+//phone
+
+export const setCurrentSelectPhoneNumber = (phoneNumber)=>{
+    return{
+        type:'SIDE_MENU_SET_CURRENT_SELECT_PHONENUMBER',
+        phoneNumber
+    }
+}
+
+export const setPhoneNumber = (phoneNumbers)=>{
+    return{
+        type:'SIDE_MENU_SET_PHONENUMBER',
+        phoneNumbers
+    }
+}
+export const updatePhoneNumbersTagInfo = (phoneNumbersTagInfo)=>{
+    return{
+        type:"SIDE_MENU_UPDATE_PHONENUMBER_TAG_INFO",
+        phoneNumbersTagInfo
+        
     }
 }

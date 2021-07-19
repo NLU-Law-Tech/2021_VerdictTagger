@@ -2,15 +2,15 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 
-let ACTION_TAGS = ['被告', '車種']
+let ACTION_TAGS = ['被告', '手機號碼']
 let HOT_KEYS = ['q','w']
-export class tagInfo extends Component {
+export class tagInfoPhone extends Component {
     constructor(props) {
         super(props)
         this.state = {
             currentSelectWord: undefined,
-            defendants: [],
-            defendantsTagInfo: {},
+            phonNumbers: [],
+            phoneNumbersTagInfo: {},
             
             
             tagAction:ACTION_TAGS[0],
@@ -20,35 +20,35 @@ export class tagInfo extends Component {
 
     static getDerivedStateFromProps(props, state) {
         let { SideMenuReducer = {}, TagReducer={}, MainReducer } = props.state,
-            { defendants = [], currentSelectDefendant } = SideMenuReducer,
+            { phoneNumbers = [], currentSelectPhoneNumber } = SideMenuReducer,
             { currentSelectWord } = TagReducer,
             { currentKeyDown } = MainReducer
-       
+        console.log("初始化")
         let { tagAction } = state
         // let { dispatch } = props
 
         // 被告變動
-        let defendantsTagInfo = state.defendantsTagInfo
+        let phoneNumbersTagInfo = state.phoneNumbersTagInfo
        
-        if (defendants !== state.defendants) {
+        if (phoneNumbers !== state.phoneNumbers) {
             // 檢查字典中是否已有初值，若無則新增
-            for (let i = 0; i < defendants.length; i++) {
-                let defendant = defendants[i]
-                // console.log(defendant)
-                if (defendant in defendantsTagInfo !== true) {
-                    defendantsTagInfo[`${defendant}`] = {}
+            for (let i = 0; i < phoneNumbers.length; i++) {
+                let phoneNumber = phoneNumbers[i]
+               console.log(phoneNumber)
+                if (phoneNumber in phoneNumbersTagInfo !== true) {
+                    phoneNumbersTagInfo[`${phoneNumber}`] = {}
                     ACTION_TAGS.forEach((ACTION_TAG) => {
-                        defendantsTagInfo[`${defendant}`][`${ACTION_TAG}`] = []
+                        phoneNumbersTagInfo[`${phoneNumber}`][`${ACTION_TAG}`] = []
                     })
                 }
             }
 
             // 檢查字典中是否有應該被刪除的
-            for (let i = 0; i < Object.keys(defendantsTagInfo).length; i++) {
-                let key = Object.keys(defendantsTagInfo)[i]
+            for (let i = 0; i < Object.keys(phoneNumbersTagInfo).length; i++) {
+                let key = Object.keys(phoneNumbersTagInfo)[i]
                 // console.log(key)
-                if (!defendants.includes(key)) {
-                    delete defendantsTagInfo[`${key}`]
+                if (!phoneNumbers.includes(key)) {
+                    delete phoneNumbersTagInfo[`${key}`]
                 }
             }
         }
@@ -58,13 +58,13 @@ export class tagInfo extends Component {
             var alert='請選擇項目再進行標記'
             console.log(alert)
          }
-        else if (typeof (currentSelectDefendant) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
-            defendantsTagInfo[`${currentSelectDefendant}`][`${state.tagAction}`].push(currentSelectWord)
+        else if (typeof (currentSelectPhoneNumber) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
+            phoneNumbersTagInfo[`${currentSelectPhoneNumber}`][`${state.tagAction}`].push(currentSelectWord)
         }
        
 
         // hot key
-        if(typeof (currentSelectDefendant) !== 'undefined' && currentKeyDown !== state.currentKeyDown){
+        if(typeof (currentSelectPhoneNumber) !== 'undefined' && currentKeyDown !== state.currentKeyDown){
             try {
                 if(HOT_KEYS.includes(currentKeyDown)){
                     let actionIndex = HOT_KEYS.indexOf(currentKeyDown)
@@ -74,14 +74,14 @@ export class tagInfo extends Component {
                 console.log(error)
             }
         }
-        console.log(defendantsTagInfo)
+        console.log(phoneNumbersTagInfo)
        
         return {
             tagAction,
             currentKeyDown,
-            defendants: [...defendants],
+            phoneNumbers: [...phoneNumbers],
             currentSelectWord,
-            defendantsTagInfo:SideMenuReducer.defendantsTagInfo,
+            phoneNumbersTagInfo:SideMenuReducer.phoneNumbersTagInfo,
             _props: props
         }
     }
@@ -92,27 +92,27 @@ export class tagInfo extends Component {
         })
     }
 
-    delActionTagElement = (defendant, actionTag, val) => {
-        let { defendantsTagInfo } = this.state
+    delActionTagElement = (phoneNumber, actionTag, val) => {
+        let { phoneNumbersTagInfo } = this.state
         // console.log(defendant, actionTag, val)
         // console.log(defendantsTagInfo)
-        defendantsTagInfo[`${defendant}`][`${actionTag}`] = defendantsTagInfo[`${defendant}`][`${actionTag}`].filter((option) => {
+        phoneNumbersTagInfo[`${phoneNumber}`][`${actionTag}`] = phoneNumbersTagInfo[`${phoneNumber}`][`${actionTag}`].filter((option) => {
             return option.val !== val
         })
         this.setState({
-            defendantsTagInfo
+            phoneNumbersTagInfo
         })
     }
 
     render() {
-        let { tagAction, defendantsTagInfo } = this.state
+        let { tagAction,phoneNumbersTagInfo } = this.state
         let { state = {} } = this.props,
             { SideMenuReducer = {} } = state,
-            { currentSelectDefendant } = SideMenuReducer
+            { currentSelectPhoneNumber } = SideMenuReducer
          console.log(tagAction)
         return (
             <div className="card">
-                {typeof (currentSelectDefendant) === 'undefined' ?
+                {typeof (currentSelectPhoneNumber) === 'undefined' ?
                     <div className="card-body">
                         <div className="card-title">
                             <b>請先選擇項目</b>
@@ -123,7 +123,7 @@ export class tagInfo extends Component {
                         <div className="card-title">
                             <b>標註資訊</b>
                             <br />
-                            <small>標註車牌:{currentSelectDefendant}</small>
+                            <small>標註手機:{currentSelectPhoneNumber}</small>
                             <br />
                             <small>標註動作:{tagAction}</small>
                         </div>
@@ -146,8 +146,8 @@ export class tagInfo extends Component {
                                         {actionTag}
 
                                         <ul>
-                                            {defendantsTagInfo[`${currentSelectDefendant}`][`${actionTag}`].map((option, index) => {
-                                                return <li key={index} onClick={() => this.delActionTagElement(currentSelectDefendant, actionTag, option.val)}><button>{option.val}</button></li>
+                                            {phoneNumbersTagInfo[`${currentSelectPhoneNumber}`][`${actionTag}`].map((option, index) => {
+                                                return <li key={index} onClick={() => this.delActionTagElement(currentSelectPhoneNumber, actionTag, option.val)}><button>{option.val}</button></li>
                                             })}
                                         </ul>
                                     </div>
@@ -167,4 +167,4 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(tagInfo)
+export default connect(mapStateToProps)(tagInfoPhone)
