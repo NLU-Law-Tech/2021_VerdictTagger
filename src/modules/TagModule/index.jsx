@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, delDoc, getReLableDoc, downloadLabeledDoc } from './action'
+import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, getReLableDoc, downloadLabeledDoc } from './action'
 import LocalUpload from './localUpload'
 
 const TagBlockFront = styled.pre`
@@ -68,14 +68,18 @@ export class index extends Component {
         window.location.reload()
     }
 
-    delDocOnclick = () => {
+    errorDocOnclick = () => {
         // let { dispatch } = this.props,
         //     { TagReducer = {} } = this.props.state,
         //     { unlabelDocId = '' } = TagReducer
         // dispatch(delDoc(unlabelDocId))
         var whyWrong=prompt("請輸入此篇判決書出錯的原因")
         if(whyWrong!=="" && whyWrong!==null){
-            alert("了解")
+            let { dispatch } = this.props,
+                { TagReducer = {} } = this.props.state,
+                { unlabelDocId = '' } = TagReducer
+            dispatch(errorDoc(unlabelDocId,whyWrong))    
+            // alert("收到")
         }
         else{
             alert("您尚未輸入 請重新輸入一次")
@@ -175,10 +179,10 @@ export class index extends Component {
                         var certain_text=highlights[i].value
                         console.log("contain",certain_text)
                         console.log(hlText)
-                        console.log('------------------')
+                        // console.log('------------------')
                         hlText=hlText.replace(certain_text,`<span>${certain_text}</span>`)
                         console.log(hlText)
-                        console.log(777777777777777777777)
+                        // console.log(777777777777777777777)
                         cj_text = cj_text.replace(re,hlText)
                     }
                 }
@@ -299,7 +303,7 @@ export class index extends Component {
                 <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
                 <button className="mr-1" onClick={this.getNextDoc}>下一篇(n)</button>
                 <button className="mr-1" onClick={this.exportLabeledDoc}>匯出本篇標註結果(t)</button>
-                <button className="float-right btn-danger" onClick={this.delDocOnclick}>回報本篇錯誤</button>
+                <button className="float-right btn-danger" onClick={this.errorDocOnclick}>回報本篇錯誤</button>
                 <hr />
                 {cj_text === '' ?
                     <small>載入中</small>

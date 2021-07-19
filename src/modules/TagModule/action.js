@@ -64,20 +64,21 @@ export const submitTag = (tagWordObject) => {
     }
 }
 
-export const delDoc = (doc_id) => {
-    return (dispatch) => {
-        axios.get(API_SERVER,{headers: {"Access-Control-Allow-Origin": "*"}} )//+ '/del/' + doc_id
-            .then(() => {
-                dispatch({
-                    type: "TAG_DEL_DOC_SCUUESS"
-                })
-                alert('已撤銷')
-                window.location.reload()
+export const errorDoc = (doc_id,err_message) => {
+    let error_doc = {
+        verdict_id: doc_id,
+        errorMsg: err_message
+    }
+    return(dispatch) => {
+        axios.post(API_SERVER + '/errorReport', error_doc,{headers: {"Access-Control-Allow-Origin": "*"}})
+            .then((res) => {
+                console.log(res)
+                dispatch({type: 'TAG_ERROR_DOC_SUCCESS'})
             })
-            .catch(() => {
-                dispatch({
-                    type: "TAG_DEL_DOC_FAIL"
-                })
+            window.location.reload()
+            .catch((res) => {
+                console.log(res)
+                dispatch({type: 'TAG_ERROR_DOC_FAIL'})
             })
     }
 }
@@ -86,7 +87,7 @@ export const getReLableDoc = () => {
     return (dispatch) => {
         dispatch(initApp())
         dispatch({ type: "TAG_GET_RELABEL_DOC_START" })
-        axios.get(API_SERVER,{headers: {"Access-Control-Allow-Origin": "*"}} )//+ "/relabel_doc"
+        axios.get(API_SERVER+ "/relabel_doc",{headers: {"Access-Control-Allow-Origin": "*"}} )
             .then((res) => {
                 let { verdict, content_id = '', labeled_data = [] } = res.data
                 console.log(res.data)
@@ -255,7 +256,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo) => {
 
         const parseUrl = require("parse-url")
         if (parseUrl(window.location.href).search === 'relabel=true') {
-            axios.post(API_SERVER + "/relabeled_data", apiObject)
+            axios.post(API_SERVER , apiObject)
                 .then((res) => {
                     console.log(res)
                     dispatch({ type: "TAG_SAVE_LABELED_DATA_SUCCESS" })
