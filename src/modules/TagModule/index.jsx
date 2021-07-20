@@ -79,7 +79,6 @@ export class index extends Component {
                 { TagReducer = {} } = this.props.state,
                 { unlabelDocId = '' } = TagReducer
             dispatch(errorDoc(unlabelDocId,whyWrong))    
-            // alert("收到")
         }
         else{
             alert("您尚未輸入 請重新輸入一次")

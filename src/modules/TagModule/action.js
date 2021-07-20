@@ -70,16 +70,21 @@ export const errorDoc = (doc_id,err_message) => {
         errorMsg: err_message
     }
     return(dispatch) => {
-        axios.post(API_SERVER + '/errorReport', error_doc,{headers: {"Access-Control-Allow-Origin": "*"}})
+        axios.post(API_SERVER + '/error-report', error_doc)
             .then((res) => {
+                console.log("QQQQQQQQQQQQQQQQQQQQQ")
                 console.log(res)
+                console.log("QQQQQQQQQQQQQQQQQQQQQQ")
+                alert("完成")
                 dispatch({type: 'TAG_ERROR_DOC_SUCCESS'})
+                window.location.reload()
             })
-            window.location.reload()
-            .catch((res) => {
-                console.log(res)
+            .catch((error) => {
+                console.log(error)
+                alert("失敗")
                 dispatch({type: 'TAG_ERROR_DOC_FAIL'})
             })
+            
     }
 }
 
@@ -256,7 +261,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo) => {
 
         const parseUrl = require("parse-url")
         if (parseUrl(window.location.href).search === 'relabel=true') {
-            axios.post(API_SERVER , apiObject)
+            axios.post(API_SERVER+ "/save-labeled-data" , apiObject)
                 .then((res) => {
                     console.log(res)
                     dispatch({ type: "TAG_SAVE_LABELED_DATA_SUCCESS" })
