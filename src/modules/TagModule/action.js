@@ -215,6 +215,7 @@ export const getUnlabelDoc = () => {
 }
 
 const _changeObjectKey2Api = (oriObjects) => {
+    
     return oriObjects.map((oriObject) => {
         return {
             content: oriObject.val,
@@ -224,67 +225,85 @@ const _changeObjectKey2Api = (oriObjects) => {
     })
 }
 
-export const saveLabeledData = (unlabelDocId, defendantsTagInfo) => {
-    console.log(unlabelDocId, defendantsTagInfo)
+export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagInfo,phoneNumbersTagInfo) => {
+    console.log(phoneNumbersTagInfo)
     return (dispatch) => {
         dispatch({ type: "TAG_SAVE_LABELED_DATA_START" })
         let defendantsTagInfoKeys = Object.keys(defendantsTagInfo)
+        let bankAccountsTagInfoKeys = Object.keys(bankAccountsTagInfo)
+        let phoneNumbersTagInfoKeys = Object.keys(phoneNumbersTagInfo)
+        let defendant_name
+        if(Object.keys(defendantsTagInfo).length  != 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
+        else if(Object.keys(bankAccountsTagInfo).length  != 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
+        else if(Object.keys(phoneNumbersTagInfo).length  != 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
+        console.log(Object.keys(defendantsTagInfo).length)
+        console.log(Object.keys(bankAccountsTagInfo).length)
+        console.log(Object.keys(phoneNumbersTagInfo).length)
+        let licensePlate=[]
+        let bankAccount=[]
+        let cellPhoneNumber=[]
+       
+        if(Object.keys(defendantsTagInfo).length  !== 0){
+            defendantsTagInfoKeys.forEach((key) => {
+            console.log(defendantsTagInfo)
 
-        let api_labeled_data = []
-        defendantsTagInfoKeys.forEach((key) => {
-            console.log(defendantsTagInfo[`${key}`])
-
-            // let ACTION_TAGS = ['單位', '職稱', '身份', '法條']
-            let units = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'單位'}`])
-            let positions = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'職稱'}`])
-            let identities = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'身份'}`])
-            let laws = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'法條'}`])
-
-            api_labeled_data.push({
-                name: {
-                    content: key,
-                    start: 0,
-                    end: 0
-                },
-                units,//每個也都向上面的name一樣有3個欄位
-                positions,
-                identities,
-                laws
+                //車牌 let ACTION_TAGS = ['被告', '車種',]
+                let defenantName_license = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'被告'}`])
+                let vehicleType = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'車種'}`])
+                
+                console.log(vehicleType)
+                licensePlate.push({
+                    defenantName_license,
+                    vehicleType,
+                })
             })
-        })
-
-        let apiObject = {
-            doc_id: unlabelDocId,
-            labeled_data: api_labeled_data
         }
-        console.log(apiObject)
-
-        const parseUrl = require("parse-url")
-        if (parseUrl(window.location.href).search === 'relabel=true') {
-            axios.post(API_SERVER+ "/save-labeled-data" , apiObject)
-                .then((res) => {
-                    console.log(res)
-                    dispatch({ type: "TAG_SAVE_LABELED_DATA_SUCCESS" })
-                    alert('已儲存')
-                })
-                .catch((error) => {
-                    console.log(error)
-                    alert('儲存失敗')
-                })
+                    
+        if(Object.keys(bankAccountsTagInfo).length  !== 0){
+            bankAccountsTagInfoKeys.forEach((key)=>{
+                    //帳號 let ACTION_TAGS = ['被告', '帳戶','銀行']
+                    console.log(defendantsTagInfo[`${key}`])
+    
+                let defenantName_account=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'被告'}`])
+                let accountNumber=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'帳戶'}`])
+                let bankName=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
+                bankAccount.push({
+                    defenantName_account,
+                    bankName           })
+            })
+       
         }
-        else {
-            axios.post(API_SERVER + "/labeled_data", apiObject)
-                .then((res) => {
-                    console.log(res)
-                    dispatch({ type: "TAG_SAVE_LABELED_DATA_SUCCESS" })
-                    alert('已儲存')
-                })
-                .catch((error) => {
-                    console.log(error)
-                    alert('儲存失敗')
-                })
-
+      
+        if(Object.keys(phoneNumbersTagInfo).length  !== 0){
+            phoneNumbersTagInfoKeys.forEach((key)=>{
+                //手機號碼 let ACTION_TAGS = ['被告', '手機號碼']
+            let defenantName_phone=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'被告'}`])
+            let phoneNumber=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'手機號碼'}`])
+            
+            cellPhoneNumber.push({
+                defenantName_phone,
+                phoneNumber        })
+            })
         }
+          console.log(cellPhoneNumber)
+
+          //converge to spec labled data
+          let api_labeled_data = {
+            "verdict_id": unlabelDocId,
+            "tagState": "labeled",
+            "errorMsg": "",
+            "defendant": {
+                [defendant_name]:{
+                    licensePlate,
+                    bankAccount,
+                    cellPhoneNumber
+                }
+            }
+        }
+        console.log(api_labeled_data)
+        
+
+        
 
     }
 }

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, getReLableDoc, downloadLabeledDoc } from './action'
 import LocalUpload from './localUpload'
+import { updateBankAccountsTagInfo, updatePhoneNumbersTagInfo } from '../SideMenuModule/action'
 
 const TagBlockFront = styled.pre`
     z-index:2;
@@ -29,7 +30,7 @@ export class index extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            fontSize: 20,
+            fontSize: 25,
             cj_text: '',
             cj_text_hl: '',
             hightLightCJText: () => { }
@@ -197,16 +198,16 @@ export class index extends Component {
         // eslint-disable-next-line
         let { dispatch } = this.props,
             { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
-            { defendantsTagInfo } = SideMenuReducer,
+            { defendantsTagInfo, phoneNumbersTagInfo,bankAccountsTagInfo} = SideMenuReducer,
             { unlabelDocId = '' } = TagReducer
-        console.log('save ->', defendantsTagInfo)
-        // if (unlabelDocId !== '' && Object.keys(defendantsTagInfo).length > 0) {
-        //     dispatch(saveLabledDataAction(unlabelDocId, defendantsTagInfo))
-        // }
-        // else {
-        //     alert("saveLabeldData error,rule not pass")
-        //     console.warn("saveLabeldData error,rule not pass", unlabelDocId, defendantsTagInfo)
-        // }
+        //console.log('save ->', defendantsTagInfo,phoneNumbersTagInfo,bankAccountsTagInfo)
+        if (unlabelDocId !== '' && (Object.keys(defendantsTagInfo).length > 0||Object.keys(bankAccountsTagInfo).length > 0||Object.keys(phoneNumbersTagInfo).length > 0)) {
+            dispatch(saveLabledDataAction(unlabelDocId, defendantsTagInfo,bankAccountsTagInfo,phoneNumbersTagInfo))
+        }
+        else {
+            alert("saveLabeldData error,rule not pass")
+            console.warn("saveLabeldData error,rule not pass", unlabelDocId, defendantsTagInfo)
+        }
     }
 
     requestLabeledDoc = () => {
