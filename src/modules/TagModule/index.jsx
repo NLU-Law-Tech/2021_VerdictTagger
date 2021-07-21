@@ -133,23 +133,9 @@ export class index extends Component {
         if (reg_type==="bank")
         {   
 
-            let re_bank_1=new RegExp("(.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)(.{0,5})(帳號|帳戶|│)?(?:(?!年|元|月|萬|千|百|第)\\w)(.{0,11})(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{3,15}(.{0,9})(帳戶|存簿)","g");
-            let re_bank_2=new RegExp("(.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)+(.{0,20})(帳號|帳戶|局號|│|卡號)(.{0,10})(?:(?!年|元|月|萬|千|百)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百)\\w)[0-9]{3,15}(?:(?!年|元|月|萬|千|百)\\w)(號)?(帳戶)?(、)?[0-9]*","g")
-            // var test=/(.{0,30})高雄銀行帳號00/g.exec(cj_text)
-            // console.log(7777)
-            // console.log(test)
-            var re_array_2=cj_text.match(re_bank_2)
-            re_array=cj_text.match(re_bank_1)
-            if(re_array===null && re_array_2===null)
-            {
-                return;
-            }
-            
-            if(re_array_2!==null && re_array !==null)
-            {
-                re_array=re_array.concat(re_array_2);
-            }
-            // console.log(re_array_1);
+            let re_bank=new RegExp("((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)(.{0,5})(帳號|帳戶|│)?(?:(?!年|元|月|萬|千|百|第)\\w)(.{0,11})(?:(?!年|元|月|萬|千|百|第|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{3,15}(.{0,9})(帳戶|存簿))|((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)+(.{0,20})(帳號|帳戶|局號|│|卡號)(.{0,10})(?:(?!年|元|月|萬|千|百|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百)\\w)[0-9]{3,15}(?:(?!年|元|月|萬|千|百)\\w)(號)?(帳戶)?(、)?[0-9]*)","g");
+            re_array=cj_text.match(re_bank)
+
             
         }
         else if (reg_type==='phone')
@@ -166,22 +152,26 @@ export class index extends Component {
         {
             return;
         }
+        
         re_array.forEach((hlText) => {
             if (hlText !== '') {
-                let re = new RegExp(hlText, "g");
+                let new_hlText = hlText.replace(/\)/g, '\\)')
+                let re = new RegExp(new_hlText, "g");
                 for(var i=0;i<highlights.length;i++)
                 {
                     let contain=hlText.includes(highlights[i].value)
-                    console.log(contain)
+                    console.log(88888888888)
+                    console.log(highlights[i])
+                    console.log(88888888888)
                     if(contain===true)
                     {
-                        
+                        // cj_text=cj_text.replace(/\)/g,"\\)")
                         var certain_text=highlights[i].value
-                        console.log("contain",certain_text)
-                        console.log(hlText)
+                        // console.log("contains",certain_text)
+                        // console.log(hlText)
                         // console.log('------------------')
                         hlText=hlText.replace(certain_text,`<span>${certain_text}</span>`)
-                        console.log(hlText)
+                        // console.log(hlText)
                         // console.log(777777777777777777777)
                         cj_text = cj_text.replace(re,hlText)
                     }
@@ -230,8 +220,11 @@ export class index extends Component {
         let { dispatch } = this.props
         let selection = window.getSelection();
         let selectWord = selection.toString();
+        console.log(7777777777777777777777)
+        console.log(selectWord)
+        console.log(7777777777777777777777)
         let tag_start = selection.anchorOffset;
-        let tag_end = selection.focusOffset - 1;
+        let tag_end = selection.focusOffset;
 
         if (selectWord.length === 0) {
             return
@@ -248,7 +241,9 @@ export class index extends Component {
             tag_start,
             tag_end
         }
+        console.log(777777777)
         console.log(selectTag)
+        console.log(777777777)
         dispatch(submitTag(selectTag))
         this.cleanSelection()
 
@@ -278,12 +273,13 @@ export class index extends Component {
         let { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
             { defendants } = SideMenuReducer,
             { unlabelDocHl } = TagReducer
+        
         let cj_text_bank_hl = this.hightLightCJText(cj_text, "bank", unlabelDocHl)
         let cj_text_car_hl = this.hightLightCJText(cj_text, "car", unlabelDocHl)
         let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", unlabelDocHl)
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
-
+        // cj_text=cj_text.replace(/\\)/g,"\\)")
         let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'TRUE' && cj_text === '') {
             return (

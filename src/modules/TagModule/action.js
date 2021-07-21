@@ -9,6 +9,7 @@ let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
 
 if (process.env.NODE_ENV !== 'production' && REACT_APP_LOCAL_MODE === 'FALSE') {
     API_SERVER = 'http://140.120.13.245:9489/verdicts'
+    // API_SERVER = 'https://acf9b465017b.ngrok.io/verdicts'
 }
 console.log('API_SERVER:', API_SERVER)
 
@@ -233,9 +234,9 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         let bankAccountsTagInfoKeys = Object.keys(bankAccountsTagInfo)
         let phoneNumbersTagInfoKeys = Object.keys(phoneNumbersTagInfo)
         let defendant_name
-        if(Object.keys(defendantsTagInfo).length  != 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
-        else if(Object.keys(bankAccountsTagInfo).length  != 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
-        else if(Object.keys(phoneNumbersTagInfo).length  != 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
+        if(Object.keys(defendantsTagInfo).length  !== 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
+        else if(Object.keys(bankAccountsTagInfo).length  !== 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
+        else if(Object.keys(phoneNumbersTagInfo).length  !== 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
         console.log(Object.keys(defendantsTagInfo).length)
         console.log(Object.keys(bankAccountsTagInfo).length)
         console.log(Object.keys(phoneNumbersTagInfo).length)
@@ -290,8 +291,6 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
           //converge to spec labled data
           let api_labeled_data = {
             "verdict_id": unlabelDocId,
-            "tagState": "labeled",
-            "errorMsg": "",
             "defendant": {
                 [defendant_name]:{
                     licensePlate,
@@ -300,8 +299,24 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                 }
             }
         }
-        console.log(api_labeled_data)
-        
+        console.log(5555555555555555555555555555555)
+        console.log(JSON.stringify(api_labeled_data))
+        console.log(5555555555555555555555555555555)
+        axios.post(API_SERVER,JSON.stringify(api_labeled_data))
+            .then((res) => {
+                console.log(res)
+                dispatch({type:"TAG_SAVE_LABELED_DATA_SUCESS" })
+                console.log(777777777777777)
+                console.log(JSON.stringify(api_labeled_data))
+                console.log(77777777777777)
+                alert("已儲存,ID:"+unlabelDocId)
+            })
+            .catch((error) => {
+                console.log(77777777)
+                console.log(error.response.data)
+                console.log(77777777)
+                alert("失敗")
+            })
 
         
 
