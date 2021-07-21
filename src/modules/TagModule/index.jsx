@@ -220,9 +220,9 @@ export class index extends Component {
         let { dispatch } = this.props
         let selection = window.getSelection();
         let selectWord = selection.toString();
-        console.log(7777777777777777777777)
-        console.log(selectWord)
-        console.log(7777777777777777777777)
+        // console.log(7777777777777777777777)
+        // console.log(selectWord)
+        // console.log(7777777777777777777777)
         let tag_start = selection.anchorOffset;
         let tag_end = selection.focusOffset;
 
