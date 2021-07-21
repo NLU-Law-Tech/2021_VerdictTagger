@@ -260,16 +260,18 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                     
         if(Object.keys(bankAccountsTagInfo).length  !== 0){
             bankAccountsTagInfoKeys.forEach((key)=>{
-                    //帳號 let ACTION_TAGS = ['被告', '帳戶','銀行']
+                    //帳號 let ACTION_TAGS = ['被告', '帳戶','銀行','分行']
                     console.log(defendantsTagInfo[`${key}`])
     
                 let defendantPos=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'被告'}`])
                 let number=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'帳戶'}`])
                 let bank=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
+                let branch=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'分行'}`])
                 bankAccount.push({
                     defendantPos,
                     number,
-                    bank           })
+                    bank ,
+                    branch          })
             })
        
         }

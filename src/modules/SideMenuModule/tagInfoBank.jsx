@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 //import { updateBankAccountsTagInfo } from './action'
 
-let ACTION_TAGS = ['被告', '帳戶','銀行']
-let HOT_KEYS = ['q','w','e']
+let ACTION_TAGS = ['被告', '帳戶','銀行','分行']
+let HOT_KEYS = ['q','w','e','r']
 export class tagInfoBank extends Component {
     constructor(props) {
         super(props)
