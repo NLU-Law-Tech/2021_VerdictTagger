@@ -73,9 +73,9 @@ export const errorDoc = (doc_id,err_message) => {
     return(dispatch) => {
         axios.post(API_SERVER + '/error-report', error_doc)
             .then((res) => {
-                console.log("QQQQQQQQQQQQQQQQQQQQQ")
-                console.log(res)
-                console.log("QQQQQQQQQQQQQQQQQQQQQQ")
+                // console.log("QQQQQQQQQQQQQQQQQQQQQ")
+                // console.log(res.)
+                // console.log("QQQQQQQQQQQQQQQQQQQQQQ")
                 alert("完成")
                 dispatch({type: 'TAG_ERROR_DOC_SUCCESS'})
                 window.location.reload()
@@ -299,22 +299,14 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                 }
             }
         }
-        console.log(5555555555555555555555555555555)
-        console.log(JSON.stringify(api_labeled_data))
-        console.log(5555555555555555555555555555555)
-        axios.post(API_SERVER,JSON.stringify(api_labeled_data))
+        axios.post(API_SERVER,api_labeled_data)
             .then((res) => {
                 console.log(res)
                 dispatch({type:"TAG_SAVE_LABELED_DATA_SUCESS" })
-                console.log(777777777777777)
-                console.log(JSON.stringify(api_labeled_data))
-                console.log(77777777777777)
                 alert("已儲存,ID:"+unlabelDocId)
             })
             .catch((error) => {
-                console.log(77777777)
                 console.log(error.response.data)
-                console.log(77777777)
                 alert("失敗")
             })
 
