@@ -164,6 +164,7 @@ export class index extends Component {
                     console.log(highlights[i])
                     console.log(88888888888)
                     if(contain===true)
+                    
                     {
                         // cj_text=cj_text.replace(/\)/g,"\\)")
                         var certain_text=highlights[i].value
@@ -224,8 +225,14 @@ export class index extends Component {
         // console.log(selectWord)
         // console.log(7777777777777777777777)
         let tag_start = selection.anchorOffset;
+<<<<<<< Updated upstream
         let tag_end = selection.focusOffset;
 
+=======
+        let tag_end = selection.focusOffset - 1;
+         console.log("斜線")
+         console.log(selectWord)
+>>>>>>> Stashed changes
         if (selectWord.length === 0) {
             return
         }

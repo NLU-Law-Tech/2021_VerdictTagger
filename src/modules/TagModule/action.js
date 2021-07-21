@@ -219,7 +219,7 @@ const _changeObjectKey2Api = (oriObjects) => {
     
     return oriObjects.map((oriObject) => {
         return {
-            content: oriObject.val,
+            value: oriObject.val,
             start: oriObject.tag_start,
             end: oriObject.tag_end
         }
@@ -237,9 +237,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         if(Object.keys(defendantsTagInfo).length  !== 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
         else if(Object.keys(bankAccountsTagInfo).length  !== 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
         else if(Object.keys(phoneNumbersTagInfo).length  !== 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
-        console.log(Object.keys(defendantsTagInfo).length)
-        console.log(Object.keys(bankAccountsTagInfo).length)
-        console.log(Object.keys(phoneNumbersTagInfo).length)
+
         let licensePlate=[]
         let bankAccount=[]
         let cellPhoneNumber=[]
@@ -249,12 +247,12 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
             console.log(defendantsTagInfo)
 
                 //車牌 let ACTION_TAGS = ['被告', '車種',]
-                let defenantName_license = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'被告'}`])
+                let defendantPos = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'被告'}`])
                 let vehicleType = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'車種'}`])
                 
                 console.log(vehicleType)
                 licensePlate.push({
-                    defenantName_license,
+                    defendantPos,
                     vehicleType,
                 })
             })
@@ -265,12 +263,13 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                     //帳號 let ACTION_TAGS = ['被告', '帳戶','銀行']
                     console.log(defendantsTagInfo[`${key}`])
     
-                let defenantName_account=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'被告'}`])
-                let accountNumber=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'帳戶'}`])
-                let bankName=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
+                let defendantPos=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'被告'}`])
+                let number=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'帳戶'}`])
+                let bank=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
                 bankAccount.push({
-                    defenantName_account,
-                    bankName           })
+                    defendantPos,
+                    number,
+                    bank           })
             })
        
         }
@@ -278,12 +277,12 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         if(Object.keys(phoneNumbersTagInfo).length  !== 0){
             phoneNumbersTagInfoKeys.forEach((key)=>{
                 //手機號碼 let ACTION_TAGS = ['被告', '手機號碼']
-            let defenantName_phone=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'被告'}`])
-            let phoneNumber=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'手機號碼'}`])
+            let defendantPos=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'被告'}`])
+            let number=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'手機號碼'}`])
             
             cellPhoneNumber.push({
-                defenantName_phone,
-                phoneNumber        })
+                defendantPos,
+                number        })
             })
         }
           console.log(cellPhoneNumber)
