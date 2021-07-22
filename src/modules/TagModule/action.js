@@ -73,9 +73,7 @@ export const errorDoc = (doc_id,err_message) => {
     return(dispatch) => {
         axios.post(API_SERVER + '/error-report', error_doc)
             .then((res) => {
-                // console.log("QQQQQQQQQQQQQQQQQQQQQ")
                 // console.log(res.)
-                // console.log("QQQQQQQQQQQQQQQQQQQQQQ")
                 alert("完成")
                 dispatch({type: 'TAG_ERROR_DOC_SUCCESS'})
                 window.location.reload()

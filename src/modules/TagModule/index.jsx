@@ -135,8 +135,6 @@ export class index extends Component {
 
             let re_bank=new RegExp("((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)(.{0,5})(帳號|帳戶|│)?(?:(?!年|元|月|萬|千|百|第)\\w)(.{0,11})(?:(?!年|元|月|萬|千|百|第|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{3,15}(.{0,9})(帳戶|存簿))|((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)+(.{0,20})(帳號|帳戶|局號|│|卡號)(.{0,10})(?:(?!年|元|月|萬|千|百|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百)\\w)[0-9]{3,15}(?:(?!年|元|月|萬|千|百)\\w)(號)?(帳戶)?(、)?[0-9]*)","g");
             re_array=cj_text.match(re_bank)
-
-            
         }
         else if (reg_type==='phone')
         {
@@ -165,19 +163,15 @@ export class index extends Component {
                     console.log(88888888888)
                     if(contain===true)
                     {
-                        // cj_text=cj_text.replace(/\)/g,"\\)")
                         var certain_text=highlights[i].value
                         // console.log("contains",certain_text)
                         // console.log(hlText)
                         // console.log('------------------')
                         hlText=hlText.replace(certain_text,`<span>${certain_text}</span>`)
                         // console.log(hlText)
-                        // console.log(777777777777777777777)
                         cj_text = cj_text.replace(re,hlText)
                     }
                 }
-                
-                // cj_text = cj_text.replace(re,hlText)
             }
         })
         
@@ -220,9 +214,7 @@ export class index extends Component {
         let { dispatch } = this.props
         let selection = window.getSelection();
         let selectWord = selection.toString();
-        // console.log(7777777777777777777777)
         // console.log(selectWord)
-        // console.log(7777777777777777777777)
         let tag_start = selection.anchorOffset;
         let tag_end = selection.focusOffset;
 
@@ -241,9 +233,7 @@ export class index extends Component {
             tag_start,
             tag_end
         }
-        console.log(777777777)
         console.log(selectTag)
-        console.log(777777777)
         dispatch(submitTag(selectTag))
         this.cleanSelection()
 
@@ -267,9 +257,7 @@ export class index extends Component {
     render() {
 
         let { cj_text, fontSize } = this.state
-        // console.log(7777777777777)
         // console.log(this.props.state)
-        // console.log(7777777777777)
         let { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
             { defendants } = SideMenuReducer,
             { unlabelDocHl } = TagReducer
