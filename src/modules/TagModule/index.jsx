@@ -162,6 +162,7 @@ export class index extends Component {
                     console.log(highlights[i])
                     console.log(88888888888)
                     if(contain===true)
+                    
                     {
                         var certain_text=highlights[i].value
                         // console.log("contains",certain_text)
