@@ -231,10 +231,10 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         let defendantsTagInfoKeys = Object.keys(defendantsTagInfo)
         let bankAccountsTagInfoKeys = Object.keys(bankAccountsTagInfo)
         let phoneNumbersTagInfoKeys = Object.keys(phoneNumbersTagInfo)
-        let defendant_name
-        if(Object.keys(defendantsTagInfo).length  !== 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
-        else if(Object.keys(bankAccountsTagInfo).length  !== 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
-        else if(Object.keys(phoneNumbersTagInfo).length  !== 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
+        // let defendant_name
+        // if(Object.keys(defendantsTagInfo).length  !== 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
+        // else if(Object.keys(bankAccountsTagInfo).length  !== 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
+        // else if(Object.keys(phoneNumbersTagInfo).length  !== 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
 
         let licensePlate=[]
         let bankAccount=[]
@@ -245,12 +245,12 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
             console.log(defendantsTagInfo)
 
                 //車牌 let ACTION_TAGS = ['被告', '車種',]
-                let defendantPos = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'被告'}`])
+                let ownerPostion = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'被告'}`])
                 let vehicleType = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'車種'}`])
                 
                 console.log(vehicleType)
                 licensePlate.push({
-                    defendantPos,
+                    ownerPostion,
                     vehicleType,
                 })
             })
@@ -261,12 +261,12 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                     //帳號 let ACTION_TAGS = ['被告', '帳戶','銀行','分行']
                     console.log(defendantsTagInfo[`${key}`])
     
-                let defendantPos=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'被告'}`])
+                let ownerPostion=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'被告'}`])
                 let number=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'帳戶'}`])
                 let bank=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
                 let branch=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'分行'}`])
                 bankAccount.push({
-                    defendantPos,
+                    ownerPostion,
                     number,
                     bank ,
                     branch          })
@@ -277,27 +277,26 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         if(Object.keys(phoneNumbersTagInfo).length  !== 0){
             phoneNumbersTagInfoKeys.forEach((key)=>{
                 //手機號碼 let ACTION_TAGS = ['被告', '手機號碼']
-            let defendantPos=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'被告'}`])
+            let ownerPostion=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'被告'}`])
             let number=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'手機號碼'}`])
             
             cellPhoneNumber.push({
-                defendantPos,
+                ownerPostion,
                 number        })
             })
         }
-          console.log(cellPhoneNumber)
 
           //converge to spec labled data
           let api_labeled_data = {
             "verdict_id": unlabelDocId,
-            "defendant": {
-                [defendant_name]:{
+            "property": {
                     licensePlate,
                     bankAccount,
                     cellPhoneNumber
-                }
+                
             }
         }
+        console.log(api_labeled_data)
         axios.post(API_SERVER,api_labeled_data)
             .then((res) => {
                 console.log(res)

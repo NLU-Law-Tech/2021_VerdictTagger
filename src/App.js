@@ -35,7 +35,7 @@ export class App extends Component {
             <h3 className='mt-3 mb-3 text-center'>
               ITRI Law-Tagger
             <br />
-              <small style={{ fontSize: 18 }}><a target="_blank" rel="noopener noreferrer" href="https://hackmd.io/@cSqKkEHwT9GlCOqtNnxBQA/BJWZiDSlw">使用者指南</a></small>
+              <small style={{ fontSize: 18 }}><a target="_blank" rel="noopener noreferrer" href="https://hackmd.io/@5OkEepKxQMCd39Ta2ooYlg/B1wMKo8Cd">使用者指南</a></small>
               <br />
               <small style={{ fontSize: 8 }}><b>首次使用請詳閱指南</b></small>
             </h3>

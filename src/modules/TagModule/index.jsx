@@ -146,7 +146,7 @@ export class index extends Component {
             let re_car=new RegExp("(牌照號碼|車牌號碼|車號|車牌)(號|為|：|:)?([a-zA-Z0-9]{1,5}[-─－—–][a-zA-Z0-9]{1,5})號?","g")
              re_array=cj_text.match(re_car)
         }
-        if (re_array === null )
+        if (re_array === null ||highlights ===undefined )
         {
             return;
         }
