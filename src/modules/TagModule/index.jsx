@@ -42,7 +42,7 @@ export class index extends Component {
 
     componentDidMount() {
         const parseUrl = require("parse-url")
-        let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
+        let { REACT_APP_LOCAL_MODE = 'TRUE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'FALSE') {
             if (parseUrl(window.location.href).search === 'relabel=true') {
                 this.requestLabeledDoc()
@@ -146,7 +146,7 @@ export class index extends Component {
             let re_car=new RegExp("(牌照號碼|車牌號碼|車號|車牌)(號|為|：|:)?([a-zA-Z0-9]{1,5}[-─－—–][a-zA-Z0-9]{1,5})號?","g")
              re_array=cj_text.match(re_car)
         }
-        if (re_array === null ||highlights ===undefined )
+        if (re_array === null || highlights === undefined)
         {
             return;
         }
@@ -158,9 +158,9 @@ export class index extends Component {
                 for(var i=0;i<highlights.length;i++)
                 {
                     let contain=hlText.includes(highlights[i].value)
-                    console.log(88888888888)
+                    console.log('--------------')
                     console.log(highlights[i])
-                    console.log(88888888888)
+                    console.log('---------------')
                     if(contain===true)
                     
                     {
@@ -234,7 +234,9 @@ export class index extends Component {
             tag_start,
             tag_end
         }
+        console.log(7777777777)
         console.log(selectTag)
+        console.log(7777777777)
         dispatch(submitTag(selectTag))
         this.cleanSelection()
 
@@ -269,7 +271,7 @@ export class index extends Component {
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
         // cj_text=cj_text.replace(/\\)/g,"\\)")
-        let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
+        let { REACT_APP_LOCAL_MODE = 'TRUE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'TRUE' && cj_text === '') {
             return (
                 <>
