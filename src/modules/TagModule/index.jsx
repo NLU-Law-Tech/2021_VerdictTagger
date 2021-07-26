@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, getReLableDoc, downloadLabeledDoc } from './action'
+import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, downloadLabeledDoc } from './action'
 import LocalUpload from './localUpload'
-import { updateBankAccountsTagInfo, updatePhoneNumbersTagInfo } from '../SideMenuModule/action'
 
 const TagBlockFront = styled.pre`
     z-index:2;
@@ -44,12 +43,8 @@ export class index extends Component {
         const parseUrl = require("parse-url")
         let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'FALSE') {
-            if (parseUrl(window.location.href).search === 'relabel=true') {
-                this.requestLabeledDoc()
-            }
-            else {
-                this.requestUnlabelDoc()
-            }
+            this.requestUnlabelDoc()
+            
         }
         else {
             // this.inputOpenFileRef.current.click()
@@ -195,10 +190,6 @@ export class index extends Component {
         }
     }
 
-    requestLabeledDoc = () => {
-        let { dispatch } = this.props
-        dispatch(getReLableDoc())
-    }
 
     requestUnlabelDoc = () => {
         let { dispatch } = this.props

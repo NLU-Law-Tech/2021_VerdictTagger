@@ -3,13 +3,13 @@ import SideMenuModule from './modules/SideMenuModule'
 import TagModule from './modules/TagModule'
 import { connect } from 'react-redux'
 import { setCurrentKeyDown } from './modules/action'
-import { getIdentityList, getPostionList } from './modules/TagModule/action'
+import { getIdentityList } from './modules/TagModule/action'
 export class App extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
     let { dispatch } = this.props
     dispatch(getIdentityList())
-    dispatch(getPostionList())
+    
   }
 
   componentWillUnmount() {
@@ -46,7 +46,7 @@ export class App extends Component {
             <TagModule />
           </div>
           <div className="col-1 pt-2" style={{minWidth:260,height: '100%', overflowY: 'scroll'}}>
-            <h5 style={{backgroundColor:'rgba(0,255,255,0.3)'}}>關注身份清單</h5>
+            <h5 style={{backgroundColor:'rgba(0,255,255,0.3)'}}>標註注意事項</h5>
             
             <hr/>
             <div>
