@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 
-let ACTION_TAGS = ['被告', '車種']
+let ACTION_TAGS = ['持有人', '車種']
 let HOT_KEYS = ['q','w']
 export class tagInfo extends Component {
     constructor(props) {

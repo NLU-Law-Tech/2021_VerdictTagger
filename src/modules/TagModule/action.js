@@ -139,7 +139,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
             console.log(defendantsTagInfo)
 
                 //車牌 let ACTION_TAGS = ['被告', '車種',]
-                let ownerPostion = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'被告'}`])
+                let ownerPostion = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'持有人'}`])
                 let vehicleType = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'車種'}`])
                 
                 console.log(vehicleType)
@@ -155,7 +155,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                     //帳號 let ACTION_TAGS = ['被告', '帳戶','銀行','分行']
                     console.log(defendantsTagInfo[`${key}`])
     
-                let ownerPostion=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'被告'}`])
+                let ownerPostion=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'持有人'}`])
                 let number=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'帳戶'}`])
                 let bank=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
                 let branch=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'分行'}`])
@@ -171,7 +171,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         if(Object.keys(phoneNumbersTagInfo).length  !== 0){
             phoneNumbersTagInfoKeys.forEach((key)=>{
                 //手機號碼 let ACTION_TAGS = ['被告', '手機號碼']
-            let ownerPostion=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'被告'}`])
+            let ownerPostion=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'持有人'}`])
             let number=_changeObjectKey2Api(phoneNumbersTagInfo[`${key}`][`${'手機號碼'}`])
             
             cellPhoneNumber.push({

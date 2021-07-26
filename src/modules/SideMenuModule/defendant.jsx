@@ -117,7 +117,7 @@ export class defendant extends Component {
                        
                         <br/>
                         {isAddingNewDefendant ? '在文章中拖曳選擇車牌' : undefined}
-                        {isDelingDefendant ? '點選紅色被告按鈕刪除' : undefined}
+                        {isDelingDefendant ? '點選紅色車牌按鈕刪除' : undefined}
                         <br />
                         <hr />
                         {selectNewDefendants.map((selectNewDefendant,index) => {

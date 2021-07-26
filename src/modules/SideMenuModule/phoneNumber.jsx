@@ -117,7 +117,7 @@ export class phoneNumber extends Component {
                        
                         <br/>
                         {isAddingNewPhoneNumber ? '在文章中拖曳選擇手機' : undefined}
-                        {isDelingPhoneNumber? '點選紅色被告按鈕刪除' : undefined}
+                        {isDelingPhoneNumber? '點選紅色手機號碼按鈕刪除' : undefined}
                         <br />
                         <hr />
                         {selectNewPhoneNumbers.map((selectNewPhoneNumber,index) => {

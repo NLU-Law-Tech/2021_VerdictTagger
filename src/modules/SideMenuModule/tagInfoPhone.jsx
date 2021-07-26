@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 
-let ACTION_TAGS = ['被告', '手機號碼']
+let ACTION_TAGS = ['持有人', '手機號碼']
 let HOT_KEYS = ['q','w']
 export class tagInfoPhone extends Component {
     constructor(props) {
