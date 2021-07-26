@@ -42,7 +42,7 @@ export class index extends Component {
 
     componentDidMount() {
         const parseUrl = require("parse-url")
-        let { REACT_APP_LOCAL_MODE = 'TRUE' } = process.env
+        let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'FALSE') {
             if (parseUrl(window.location.href).search === 'relabel=true') {
                 this.requestLabeledDoc()
@@ -138,7 +138,7 @@ export class index extends Component {
         }
         else if (reg_type==='phone')
         {
-            let re_phone=new RegExp("[^編帳]{1}[^ 第0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A：、警戶鑑-]{1}[ ]{0,2}([0-9]{4}[-─－—–]?[0-9]{3}[-─－—–]?[0-9]{3})[^0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A帳戶]{1}","g")
+            let re_phone=new RegExp("(?:手機號|行動號|電話號|手機電|行動電|電|門|手){1}[碼話號機]{1}[之為]?[ 「]{0,2}([0-9]{4}[-─－—–]?[0-9]{3}[-─－—–]?[0-9]{3})(?:SIM)?[^0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A帳戶]{1}|[^編帳]{1}[^ 第0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A：、│警戶鑑字-]{1}[ ]{0,2}([0-9]{4}[-─－—–]?[0-9]{3}[-─－—–]?[0-9]{3})[ ]{0,2}[手機行動電話門號碼SIM」]{1,5}","g")
              re_array=cj_text.match(re_phone)
         }
         else if(reg_type=== 'car')
@@ -271,7 +271,7 @@ export class index extends Component {
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
         // cj_text=cj_text.replace(/\\)/g,"\\)")
-        let { REACT_APP_LOCAL_MODE = 'TRUE' } = process.env
+        let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'TRUE' && cj_text === '') {
             return (
                 <>

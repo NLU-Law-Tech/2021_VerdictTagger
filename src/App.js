@@ -45,8 +45,9 @@ export class App extends Component {
             <br />
             <TagModule />
           </div>
-          <div className="col-1 pt-2" style={{minWidth:200,height: '100%', overflowY: 'scroll'}}>
+          <div className="col-1 pt-2" style={{minWidth:260,height: '100%', overflowY: 'scroll'}}>
             <h5 style={{backgroundColor:'rgba(0,255,255,0.3)'}}>關注身份清單</h5>
+            
             <hr/>
             <div>
               {identitylist.map((position)=>{

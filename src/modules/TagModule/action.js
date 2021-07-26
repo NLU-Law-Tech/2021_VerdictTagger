@@ -41,7 +41,7 @@ export const getIdentityList = () => {
             type: 'TAG_GET_IDENTITY_LIST_START'
         })
         //https://gist.github.com/p208p2002/cbc21d9a3dd270ad95a5b209e62c1cac
-        axios.get('https://gist.githubusercontent.com/p208p2002/cbc21d9a3dd270ad95a5b209e62c1cac/raw/identity_list.txt')
+        axios.get('https://gist.githubusercontent.com/l53513955/c18c72ae165dd7359713ba70b0ea00dc/raw/2915a259fadab5bd6653ff5639d58b4096f982e6/gistfile1.txt')
             .then((res) => {
                 // console.log(res.data.split("\n"))
                 dispatch({
