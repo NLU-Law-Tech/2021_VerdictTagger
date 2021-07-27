@@ -1,15 +1,9 @@
 # ITRI LAW-TAGGER
 法律AI訓練、測試資料，答案標註系統
 
-[使用者指南](https://hackmd.io/WeJJaoqrTKWH7d0HF5PRNQ)
+[使用者指南](https://hackmd.io/0nrrMc5NQRKxlZZVkwmD7w)
 
-## Note
-根據[使用者指南](https://hackmd.io/WeJJaoqrTKWH7d0HF5PRNQ)要求標註法條細項，需搭配工具還原標註法條
 
-[標註法條還原工具](https://github.com/NLU-Law-Tech/itri-law-tagger-patch)
-
-### Backend
-[seanbbear/itri_web_backend](https://github.com/seanbbear/itri_web_backend)
 
 ## ENV mode
 ```
@@ -23,27 +17,70 @@ REACT_APP_LOCAL_MODE = [TRUE|FALSE] # 單機標註模式
 - 完整標記資訊
 
 ## Demo
-![](https://raw.githubusercontent.com/p208p2002/itri-law-tagger/master/demo.gif)
+![](https://github.com/NLU-Law-Tech/2021_VerdictTagger/blob/f8100d42a7373addbbede2d432b62e7d530b5eb1/demo.gif)
 ## Ouput Example
 ```json
 {
-    "林家珍": {
-        "單位": [],
-        "職稱": [
-            {
-                "val": "約僱人員",
-                "tag_start": 305,
-                "tag_end": 308
-            }
-        ],
-        "身份": [
-            {
-                "val": "公務員",
-                "tag_start": 488,
-                "tag_end": 490
-            }
-        ],
-        "法條": []
+    "verdict_id": "5fd20e379b09099b73e6ed41",
+    "property": {
+            "licensePlate": [
+                { 
+                    "number": {
+                        "value": "000-0000",
+                        "start": 1,
+                        "end": 2
+                    },
+                    "vehicleType": {
+                        "value": "自小客車",
+                        "start": 1,
+                        "end": 2
+                    },
+                    "ownerPostion": {
+                        "value":"張友澤",
+                        "start": 1,
+                        "end": 2
+                    }
+                }
+            ],
+            "bankAccount": [
+                {
+                    "bank": {
+                        "value": "台新銀行",
+                        "start": 1,
+                        "end": 2
+                    },
+                    "branch": {
+                        "value": "敦南分行",
+                        "start": 1,
+                        "end": 2
+                    },
+                    "number": {
+                        "value": "000-000000000",
+                        "start": 1,
+                        "end": 2
+                    },
+                    "ownerPostion": {
+                        "value":"陳紫淇",
+                        "start": 1,
+                        "end": 3
+                    }
+                }
+            ],
+            "cellPhoneNumber": [
+                {              
+                    "number": {
+                        "value": "0000000000",
+                        "start": 1,
+                        "end": 2
+                    },
+                    "ownerPostion": {
+                        "value":"童智威",
+                        "start": 1,
+                        "end": 2
+                    }
+                }
+            ]        
     }
 }
+             
 ```
