@@ -1,6 +1,8 @@
 const initialState = {
   currentSelectDefendant:undefined,
   currentSelectBankAccount:undefined,
+  
+  index:[],
   defendants:[],
   bankAccounts:[],
   phoneNumbers:[],
@@ -28,7 +30,8 @@ function Reducer(state = initialState, action) {
 
       case 'SIDE_MENU_SET_CURRENT_SELECT_DEFENDANT':
         return Object.assign({},state,{
-          currentSelectDefendant:action.defendant
+          currentSelectDefendant:action.defendant,
+          
         })
       //bank
       case "SIDE_MENU_UPDATE_BANKACCOUNT_TAG_INFO":

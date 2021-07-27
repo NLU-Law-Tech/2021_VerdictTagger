@@ -52,7 +52,7 @@ export class bankAccount extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
+        //console.log(nextProps)
         let { props, state } = this,
             { dispatch } = props
 
@@ -65,7 +65,9 @@ export class bankAccount extends Component {
 
         // catch new select
         if (state.isAddingNewBankAccount === true && (props.state.TagReducer.currentSelectWord !== nextProps.state.TagReducer.currentSelectWord)) {
-            state.selectNewBankAccounts.push(nextProps.state.TagReducer.currentSelectWord.val)
+            let pushStart=nextProps.state.TagReducer.currentSelectWord.tag_start
+            let pushEnd=nextProps.state.TagReducer.currentSelectWord.tag_end
+            state.selectNewBankAccounts.push(nextProps.state.TagReducer.currentSelectWord.val+'_S:'+pushStart+'E:'+pushEnd)
             dispatch(setBankAccounts(state.selectNewBankAccounts))
             this.setState({
                 isAddingNewBankAccount: false,

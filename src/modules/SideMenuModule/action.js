@@ -1,14 +1,16 @@
-export const setCurrentSelectDefendant = (defendant)=>{
+export const setCurrentSelectDefendant = (defendant,index)=>{
     return{
         type:'SIDE_MENU_SET_CURRENT_SELECT_DEFENDANT',
-        defendant
+        defendant,
+       
     }
 }
 
-export const setDefendants = (defendants)=>{
+export const setDefendants = (defendants,index)=>{
     return{
         type:'SIDE_MENU_SET_DEFENDANTS',
-        defendants
+        defendants,
+      
     }
 }
 
@@ -19,10 +21,11 @@ export const updateDefendantsTagInfo = (defendantsTagInfo)=>{
     }
 }
 //bank
-export const setCurrentSelectBankAccount = (bankAccount)=>{
+export const setCurrentSelectBankAccount = (bankAccount,index)=>{
     return{
         type:'SIDE_MENU_SET_CURRENT_SELECT_BANKACCOUNT',
-        bankAccount
+        bankAccount,
+        index
     }
 }
 

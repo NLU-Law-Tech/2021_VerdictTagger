@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import defendant from './defendant'
 
 
-let ACTION_TAGS = ['持有人', '車種']
-let HOT_KEYS = ['q','w']
+let ACTION_TAGS = ['持有人','車種']
+let HOT_KEYS = ['q','w','e']
 export class tagInfo extends Component {
     constructor(props) {
         super(props)
@@ -26,15 +27,15 @@ export class tagInfo extends Component {
        
         let { tagAction } = state
         // let { dispatch } = props
-
+        console.log(currentSelectWord)
         // 被告變動
         let defendantsTagInfo = state.defendantsTagInfo
-       
+        
         if (defendants !== state.defendants) {
             // 檢查字典中是否已有初值，若無則新增
             for (let i = 0; i < defendants.length; i++) {
                 let defendant = defendants[i]
-                // console.log(defendant)
+                 
                 if (defendant in defendantsTagInfo !== true) {
                     defendantsTagInfo[`${defendant}`] = {}
                     ACTION_TAGS.forEach((ACTION_TAG) => {
@@ -52,6 +53,10 @@ export class tagInfo extends Component {
                 }
             }
         }
+         
+         
+
+       
 
         // 新選擇資訊進入
         if(typeof (tagAction)==='undefined'){
@@ -59,8 +64,10 @@ export class tagInfo extends Component {
             console.log(alert)
          }
         else if (typeof (currentSelectDefendant) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
+            
             defendantsTagInfo[`${currentSelectDefendant}`][`${state.tagAction}`].push(currentSelectWord)
         }
+        console.log(defendantsTagInfo[`${currentSelectDefendant}`])
        
 
         // hot key
@@ -74,7 +81,7 @@ export class tagInfo extends Component {
                 console.log(error)
             }
         }
-        console.log(defendantsTagInfo)
+       // console.log(defendantsTagInfo)
        
         return {
             tagAction,
@@ -109,7 +116,7 @@ export class tagInfo extends Component {
         let { state = {} } = this.props,
             { SideMenuReducer = {} } = state,
             { currentSelectDefendant } = SideMenuReducer
-         console.log(tagAction)
+         console.log('座標',defendantsTagInfo)
         return (
             <div className="card">
                 {typeof (currentSelectDefendant) === 'undefined' ?
@@ -140,7 +147,7 @@ export class tagInfo extends Component {
                             })}
                             <hr />
                             {ACTION_TAGS.map((actionTag, index) => {
-                                  console.log(actionTag,index)
+                                  
                                 return (
                                     <div key={index} className={`${tagAction === actionTag ? 'bg-light font-weight-bold' : ''}`}>
                                         {actionTag}

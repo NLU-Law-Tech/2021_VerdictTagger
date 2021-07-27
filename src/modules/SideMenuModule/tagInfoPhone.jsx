@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 
-let ACTION_TAGS = ['持有人', '手機號碼']
+let ACTION_TAGS = ['持有人']
 let HOT_KEYS = ['q','w']
 export class tagInfoPhone extends Component {
     constructor(props) {
@@ -23,7 +23,7 @@ export class tagInfoPhone extends Component {
             { phoneNumbers = [], currentSelectPhoneNumber } = SideMenuReducer,
             { currentSelectWord } = TagReducer,
             { currentKeyDown } = MainReducer
-        console.log("初始化")
+       // console.log("初始化")
         let { tagAction } = state
         // let { dispatch } = props
 
@@ -34,7 +34,7 @@ export class tagInfoPhone extends Component {
             // 檢查字典中是否已有初值，若無則新增
             for (let i = 0; i < phoneNumbers.length; i++) {
                 let phoneNumber = phoneNumbers[i]
-               console.log(phoneNumber)
+              
                 if (phoneNumber in phoneNumbersTagInfo !== true) {
                     phoneNumbersTagInfo[`${phoneNumber}`] = {}
                     ACTION_TAGS.forEach((ACTION_TAG) => {
@@ -74,7 +74,7 @@ export class tagInfoPhone extends Component {
                 console.log(error)
             }
         }
-        console.log(phoneNumbersTagInfo)
+       // console.log(phoneNumbersTagInfo)
        
         return {
             tagAction,
@@ -109,7 +109,7 @@ export class tagInfoPhone extends Component {
         let { state = {} } = this.props,
             { SideMenuReducer = {} } = state,
             { currentSelectPhoneNumber } = SideMenuReducer
-         console.log(tagAction)
+         
         return (
             <div className="card">
                 {typeof (currentSelectPhoneNumber) === 'undefined' ?

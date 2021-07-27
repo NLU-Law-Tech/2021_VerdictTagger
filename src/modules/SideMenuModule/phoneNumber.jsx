@@ -53,7 +53,7 @@ export class phoneNumber extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
+        //console.log(nextProps)
         let { props, state } = this,
             { dispatch } = props
 
@@ -66,7 +66,9 @@ export class phoneNumber extends Component {
 
         // catch new select
         if (state.isAddingNewPhoneNumber === true && (props.state.TagReducer.currentSelectWord !== nextProps.state.TagReducer.currentSelectWord)) {
-            state.selectNewPhoneNumbers.push(nextProps.state.TagReducer.currentSelectWord.val)
+            let pushStart=nextProps.state.TagReducer.currentSelectWord.tag_start
+            let pushEnd=nextProps.state.TagReducer.currentSelectWord.tag_end
+            state.selectNewPhoneNumbers.push(nextProps.state.TagReducer.currentSelectWord.val+'_S:'+pushStart+'E:'+pushEnd)
             dispatch(setPhoneNumber(state.selectNewPhoneNumbers))
             this.setState({
                 isAddingNewPhoneNumber: false,

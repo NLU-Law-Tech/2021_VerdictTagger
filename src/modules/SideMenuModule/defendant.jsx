@@ -49,11 +49,12 @@ export class defendant extends Component {
 
     setSelectDefendant = (defendant) => {
         let { dispatch } = this.props
+        console.log('setselect:'+defendant)
         dispatch(setCurrentSelectDefendant(defendant))
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log(nextProps)
+       // console.log(nextProps)
         let { props, state } = this,
             { dispatch } = props
 
@@ -66,7 +67,10 @@ export class defendant extends Component {
 
         // catch new select
         if (state.isAddingNewDefendant === true && (props.state.TagReducer.currentSelectWord !== nextProps.state.TagReducer.currentSelectWord)) {
-            state.selectNewDefendants.push(nextProps.state.TagReducer.currentSelectWord.val)
+            let pushStart=nextProps.state.TagReducer.currentSelectWord.tag_start
+            let pushEnd=nextProps.state.TagReducer.currentSelectWord.tag_end
+            state.selectNewDefendants.push(nextProps.state.TagReducer.currentSelectWord.val+'_S:'+pushStart+'E:'+pushEnd)
+            //+'_S:'+currentSelectWord.tag_start+'E:'+currentSelectWord.tag_end
             dispatch(setDefendants(state.selectNewDefendants))
             this.setState({
                 isAddingNewDefendant: false,

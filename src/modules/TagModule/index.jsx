@@ -153,9 +153,9 @@ export class index extends Component {
                 for(var i=0;i<highlights.length;i++)
                 {
                     let contain=hlText.includes(highlights[i].value)
-                    console.log('--------------')
-                    console.log(highlights[i])
-                    console.log('---------------')
+                    // console.log('--------------')
+                    // console.log(highlights[i])
+                    // console.log('---------------')
                     if(contain===true)
                     
                     {
@@ -225,9 +225,9 @@ export class index extends Component {
             tag_start,
             tag_end
         }
-        console.log(7777777777)
-        console.log(selectTag)
-        console.log(7777777777)
+        // console.log(7777777777)
+        // console.log(selectTag)
+        // console.log(7777777777)
         dispatch(submitTag(selectTag))
         this.cleanSelection()
 
