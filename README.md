@@ -1,15 +1,9 @@
 # ITRI LAW-TAGGER
 法律AI訓練、測試資料，答案標註系統
 
-[使用者指南](https://hackmd.io/WeJJaoqrTKWH7d0HF5PRNQ)
+[使用者指南](https://hackmd.io/0nrrMc5NQRKxlZZVkwmD7w)
 
-## Note
-根據[使用者指南](https://hackmd.io/WeJJaoqrTKWH7d0HF5PRNQ)要求標註法條細項，需搭配工具還原標註法條
 
-[標註法條還原工具](https://github.com/NLU-Law-Tech/itri-law-tagger-patch)
-
-### Backend
-[seanbbear/itri_web_backend](https://github.com/seanbbear/itri_web_backend)
 
 ## ENV mode
 ```
@@ -23,7 +17,7 @@ REACT_APP_LOCAL_MODE = [TRUE|FALSE] # 單機標註模式
 - 完整標記資訊
 
 ## Demo
-![](https://raw.githubusercontent.com/p208p2002/itri-law-tagger/master/demo.gif)
+![](https://i.imgur.com/spFBbZL.gif)
 ## Ouput Example
 ```json
 {
