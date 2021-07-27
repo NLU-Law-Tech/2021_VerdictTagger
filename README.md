@@ -17,7 +17,7 @@ REACT_APP_LOCAL_MODE = [TRUE|FALSE] # 單機標註模式
 - 完整標記資訊
 
 ## Demo
-![](https://i.imgur.com/spFBbZL.gif)
+![](https://github.com/NLU-Law-Tech/2021_VerdictTagger/blob/f8100d42a7373addbbede2d432b62e7d530b5eb1/demo.gif)
 ## Ouput Example
 ```json
 {
