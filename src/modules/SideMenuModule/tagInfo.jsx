@@ -27,7 +27,7 @@ export class tagInfo extends Component {
        
         let { tagAction } = state
         // let { dispatch } = props
-        console.log(currentSelectWord)
+        console.log('currentSelect:',currentSelectWord)
         // 被告變動
         let defendantsTagInfo = state.defendantsTagInfo
         
@@ -67,7 +67,7 @@ export class tagInfo extends Component {
             
             defendantsTagInfo[`${currentSelectDefendant}`][`${state.tagAction}`].push(currentSelectWord)
         }
-        console.log(defendantsTagInfo[`${currentSelectDefendant}`])
+        
        
 
         // hot key
@@ -116,7 +116,7 @@ export class tagInfo extends Component {
         let { state = {} } = this.props,
             { SideMenuReducer = {} } = state,
             { currentSelectDefendant } = SideMenuReducer
-         console.log('座標',defendantsTagInfo)
+        
         return (
             <div className="card">
                 {typeof (currentSelectDefendant) === 'undefined' ?
