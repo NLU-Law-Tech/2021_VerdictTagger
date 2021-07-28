@@ -52,7 +52,7 @@ export const errorDoc = (doc_id,err_message) => {
     }
     
     return(dispatch) => {
-        axios.post(API_SERVER + '/error-report', error_doc)
+        axios.post(API_SERVER + '/verdicts/error-report', error_doc)
             .then((res) => {
                 // console.log(res.)
                 alert("完成")
@@ -110,13 +110,13 @@ export const getUnlabelDoc = () => {
 
 const _changeObjectKey2Api = (oriObjects) => {
     
-    return oriObjects.map((oriObject) => {
+    //return oriObjects.map((oriObject) => {
         return {
-            value: oriObject.val,
-            start: oriObject.tag_start,
-            end: oriObject.tag_end
+            value: oriObjects.val,
+            start: oriObjects.tag_start,
+            end: oriObjects.tag_end
         }
-    })
+  //  })
 }
 
 export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagInfo,phoneNumbersTagInfo) => {
@@ -164,8 +164,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                     else
                      continue              
                 }
-                let number=[{value: carNumber, start: parseInt(nStart,10), end: parseInt(nEnd, 10)}]
-
+                let number={value: carNumber, start: parseInt(nStart,10), end: parseInt(nEnd, 10)}
                 licensePlate.push({
                     number,
                     ownerPostion,
@@ -207,7 +206,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                     else
                      continue              
                 }
-                let number=[{value: bankNumber, start: parseInt(nStart,10), end: parseInt(nEnd, 10)}]
+                let number={value: bankNumber, start: parseInt(nStart,10), end: parseInt(nEnd, 10)}
                 bankAccount.push({
                     number,
                     ownerPostion,
@@ -244,7 +243,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                     else
                      continue              
                 }
-                let number=[{value: phoneNumber, start: parseInt(nStart,10), end: parseInt(nEnd, 10)}]
+                let number={value: phoneNumber, start: parseInt(nStart,10), end: parseInt(nEnd, 10)}
             
             
             cellPhoneNumber.push({
@@ -253,7 +252,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                        })
             })
         }
-
+       
           //converge to spec labled data
           let api_labeled_data = {
             "verdict_id": unlabelDocId,
