@@ -9,6 +9,8 @@ let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
 //開發模式下，API_SERVER打到測試後端，production(build之後)
 if (process.env.NODE_ENV !== 'production' && REACT_APP_LOCAL_MODE === 'FALSE') {
     API_SERVER = 'http://140.120.13.245:9489'
+    //140.120.182.90:9487
+    //http://140.120.13.245:9489
     // API_SERVER = 'https://acf9b465017b.ngrok.io/verdicts'
 }
 console.log('API_SERVER:', API_SERVER)
@@ -110,13 +112,14 @@ export const getUnlabelDoc = () => {
 
 const _changeObjectKey2Api = (oriObjects) => {
     
-    //return oriObjects.map((oriObject) => {
+    //return oriObjects.map((oriObject) => { })  每個case只有一組故不需回傳整個array
+       let oriObject=oriObjects[0]
         return {
-            value: oriObjects.val,
-            start: oriObjects.tag_start,
-            end: oriObjects.tag_end
+            value: oriObject.val,
+            start: oriObject.tag_start,
+            end: oriObject.tag_end
         }
-  //  })
+    
 }
 
 export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagInfo,phoneNumbersTagInfo) => {
@@ -130,7 +133,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         // if(Object.keys(defendantsTagInfo).length  !== 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
         // else if(Object.keys(bankAccountsTagInfo).length  !== 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
         // else if(Object.keys(phoneNumbersTagInfo).length  !== 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
-        console.log(Object.keys(defendantsTagInfo)[1])
+       
         let licensePlate=[]
         let bankAccount=[]
         let cellPhoneNumber=[]
@@ -142,7 +145,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                 let vehicleType = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'車種'}`])
                 let carNumber ='',nStart='',nEnd=''
                 let i
-               
+              
                 for(i=0;i<key.length;i++){
                     if (key[i]!=='_')
                       carNumber=carNumber+key[i]
@@ -183,7 +186,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                 let branch=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'分行'}`])
                 let bankNumber ='',nStart='',nEnd=''
                 let i
-               
+
                 for(i=0;i<key.length;i++){
                     if (key[i]!=='_')
                         bankNumber=bankNumber+key[i]
