@@ -82,10 +82,10 @@ export class phoneNumber extends Component {
                 currentKeyDown:nextProps.state.MainReducer.currentKeyDown
             })
             let key = nextProps.state.MainReducer.currentKeyDown
-            if(key === 'a'){
+            if(key === 'z'){
                 this.addingNewPhoneNumber()
             }
-            else if(key === 'd'){
+            else if(key === 'x'){
                 this.delingPhoneNumber()
             }
             else if(!isNaN(parseInt(key))){
@@ -114,8 +114,8 @@ export class phoneNumber extends Component {
                 <div className="card-body">
                     <div className="card-title"><b>手機號碼</b></div>
                     <div className="card-text">
-                        <button className="mr-2" onClick={this.addingNewPhoneNumber}>新增手機(a)</button>
-                        <button className="mr-2" onClick={this.delingPhoneNumber}>刪除手機(d)</button>
+                        <button className="mr-2" onClick={this.addingNewPhoneNumber}>新增手機(z)</button>
+                        <button className="mr-2" onClick={this.delingPhoneNumber}>刪除手機(x)</button>
                        
                         <br/>
                         {isAddingNewPhoneNumber ? '在文章中拖曳選擇手機' : undefined}

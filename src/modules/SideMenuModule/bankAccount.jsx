@@ -84,7 +84,7 @@ export class bankAccount extends Component {
             if(key === 'a'){
                 this.addingNewBankAccount()
             }
-            else if(key === 'd'){
+            else if(key === 's'){
                 this.delingBankAccount()
             }
             else if(!isNaN(parseInt(key))){
@@ -114,7 +114,7 @@ export class bankAccount extends Component {
                     <div className="card-title"><b>銀行帳號</b></div>
                     <div className="card-text">
                         <button className="mr-1" onClick={this.addingNewBankAccount}>新增帳號(a)</button>
-                        <button onClick={this.delingBankAccount}>刪除帳號(d)</button>
+                        <button onClick={this.delingBankAccount}>刪除帳號(s)</button>
                         <br/>
                         {isAddingNewBankAccount ? '在文章中拖曳選擇銀行帳號' : undefined}
                         {isDelingBankAccount ? '點選紅色帳號按鈕刪除' : undefined}

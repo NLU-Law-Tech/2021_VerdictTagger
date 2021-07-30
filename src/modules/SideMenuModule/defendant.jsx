@@ -84,10 +84,10 @@ export class defendant extends Component {
                 currentKeyDown:nextProps.state.MainReducer.currentKeyDown
             })
             let key = nextProps.state.MainReducer.currentKeyDown
-            if(key === 'a'){
+            if(key === 'q'){
                 this.addingNewDefendant()
             }
-            else if(key === 'd'){
+            else if(key === 'w'){
                 this.delingDefendant()
             }
             else if(!isNaN(parseInt(key))){
@@ -116,8 +116,8 @@ export class defendant extends Component {
                 <div className="card-body">
                     <div className="card-title"><b>車牌號碼</b></div>
                     <div className="card-text">
-                        <button className="mr-2" onClick={this.addingNewDefendant}>新增車牌(a)</button>
-                        <button className="mr-2" onClick={this.delingDefendant}>刪除車牌(d)</button>
+                        <button className="mr-2" onClick={this.addingNewDefendant}>新增車牌(q)</button>
+                        <button className="mr-2" onClick={this.delingDefendant}>刪除車牌(w)</button>
                        
                         <br/>
                         {isAddingNewDefendant ? '在文章中拖曳選擇車牌' : undefined}

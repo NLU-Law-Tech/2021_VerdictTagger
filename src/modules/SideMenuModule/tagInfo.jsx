@@ -4,7 +4,7 @@ import defendant from './defendant'
 
 
 let ACTION_TAGS = ['持有人','車種']
-let HOT_KEYS = ['q','w','e']
+let HOT_KEYS = ['e','r']
 export class tagInfo extends Component {
     constructor(props) {
         super(props)

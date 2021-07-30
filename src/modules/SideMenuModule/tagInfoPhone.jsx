@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 
 let ACTION_TAGS = ['持有人']
-let HOT_KEYS = ['q','w']
+let HOT_KEYS = ['c',]
 export class tagInfoPhone extends Component {
     constructor(props) {
         super(props)
