@@ -56,12 +56,12 @@ export const errorDoc = (doc_id,err_message) => {
     return(dispatch) => {
         axios.post(API_SERVER + '/verdicts/error-report', error_doc)
             .then((res) => {
-                // console.log(res.)
+                console.log(API_SERVER+'/verdicts/error-report')
                 alert("完成")
                 dispatch({type: 'TAG_ERROR_DOC_SUCCESS'})
-                window.location.reload()
             })
             .catch((error) => {
+                console.log(API_SERVER+'/verdicts/error-report')
                 console.log('錯誤訊息回傳失敗:',error.response.data)
                 alert("失敗")
                 dispatch({type: 'TAG_ERROR_DOC_FAIL'})
@@ -270,11 +270,12 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         console.log(api_labeled_data)
         axios.post(API_SERVER+'/verdicts',api_labeled_data)
             .then((res) => {
-                console.log(res)
+                //console.log(res)
                 dispatch({type:"TAG_SAVE_LABELED_DATA_SUCESS" })
                 alert("已儲存,ID:"+unlabelDocId)
             })
             .catch((error) => {
+                console.log(API_SERVER+'/verdicts')
                 console.log(error.response.data)
                 alert("失敗")
             })

@@ -280,7 +280,7 @@ export class index extends Component {
                 <hr />
                 <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
                 <button className="mr-1" onClick={this.getNextDoc}>下一篇(n)</button>
-                <button className="mr-1" onClick={this.exportLabeledDoc}>匯出本篇標註結果(t)</button>
+                {/* <button className="mr-1" onClick={this.exportLabeledDoc}>匯出本篇標註結果(t)</button> */}
                 <button className="float-right btn-danger" onClick={this.errorDocOnclick}>回報本篇錯誤</button>
                 <hr />
                 {cj_text === '' ?
