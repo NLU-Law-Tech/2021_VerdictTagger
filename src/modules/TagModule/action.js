@@ -114,12 +114,20 @@ const _changeObjectKey2Api = (oriObjects) => {
     
     //return oriObjects.map((oriObject) => { })  每個case只有一組故不需回傳整個array
        let oriObject=oriObjects[0]
+        if(oriObject===undefined){
+            return {
+                value: "",
+                start: "",
+                end: ""
+            }
+        }
+        else{
         return {
             value: oriObject.val,
             start: oriObject.tag_start,
             end: oriObject.tag_end
         }
-    
+        }
 }
 
 export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagInfo,phoneNumbersTagInfo) => {
@@ -268,17 +276,17 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         }
         console.log("JSON:")
         console.log(api_labeled_data)
-        axios.post(API_SERVER+'/verdicts',api_labeled_data)
-            .then((res) => {
-                //console.log(res)
-                dispatch({type:"TAG_SAVE_LABELED_DATA_SUCESS" })
-                alert("已儲存,ID:"+unlabelDocId)
-            })
-            .catch((error) => {
-                console.log(API_SERVER+'/verdicts')
-                console.log(error.response.data)
-                alert("失敗")
-            })
+        // axios.post(API_SERVER+'/verdicts',api_labeled_data)
+        //     .then((res) => {
+        //         //console.log(res)
+        //         dispatch({type:"TAG_SAVE_LABELED_DATA_SUCESS" })
+        //         alert("已儲存,ID:"+unlabelDocId)
+        //     })
+        //     .catch((error) => {
+        //         console.log(API_SERVER+'/verdicts')
+        //         console.log(error.response.data)
+        //         alert("失敗")
+        //     })
 
         
 
