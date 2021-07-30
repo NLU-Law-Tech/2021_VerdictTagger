@@ -83,10 +83,7 @@ export const getUnlabelDoc = () => {
                 let content_id=res.data._id
                 let judgement=res.data.judgement
                 let highlight=res.data.highlight
-                //  let { verdict, content_id = '' } = res.data
-
-                // verdict = JSON.parse(verdict)
-                // let { judgement } = verdict
+              
                  
                 dispatch({
                      type: "TAG_GET_UNLABEL_DOC_SUCCESS",
@@ -111,8 +108,6 @@ export const getUnlabelDoc = () => {
 }
 
 const _changeObjectKey2Api = (oriObjects) => {
-    
-    //return oriObjects.map((oriObject) => { })  每個case只有一組故不需回傳整個array
        let oriObject=oriObjects[0]
         if(oriObject===undefined){
             return {
@@ -137,10 +132,6 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         let defendantsTagInfoKeys = Object.keys(defendantsTagInfo)
         let bankAccountsTagInfoKeys = Object.keys(bankAccountsTagInfo)
         let phoneNumbersTagInfoKeys = Object.keys(phoneNumbersTagInfo)
-        // let defendant_name
-        // if(Object.keys(defendantsTagInfo).length  !== 0){ defendant_name=Object.values(defendantsTagInfo)[0].被告[0].val}
-        // else if(Object.keys(bankAccountsTagInfo).length  !== 0){defendant_name=Object.values(bankAccountsTagInfo)[0].被告[0].val}
-        // else if(Object.keys(phoneNumbersTagInfo).length  !== 0) { defendant_name=Object.values(phoneNumbersTagInfo)[0].被告[0].val}
        
         let licensePlate=[]
         let bankAccount=[]
@@ -276,17 +267,17 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
         }
         console.log("JSON:")
         console.log(api_labeled_data)
-        // axios.post(API_SERVER+'/verdicts',api_labeled_data)
-        //     .then((res) => {
-        //         //console.log(res)
-        //         dispatch({type:"TAG_SAVE_LABELED_DATA_SUCESS" })
-        //         alert("已儲存,ID:"+unlabelDocId)
-        //     })
-        //     .catch((error) => {
-        //         console.log(API_SERVER+'/verdicts')
-        //         console.log(error.response.data)
-        //         alert("失敗")
-        //     })
+        axios.post(API_SERVER+'/verdicts',api_labeled_data)
+            .then((res) => {
+                //console.log(res)
+                dispatch({type:"TAG_SAVE_LABELED_DATA_SUCESS" })
+                alert("已儲存,ID:"+unlabelDocId)
+            })
+            .catch((error) => {
+                console.log(API_SERVER+'/verdicts')
+                console.log(error.response.data)
+                alert("失敗")
+            })
 
         
 
@@ -302,7 +293,7 @@ export const downloadLabeledDoc = (unlabelDocId, unlabelDoc, defendantsTagInfo) 
     defendantsTagInfoKeys.forEach((key) => {
         console.log(defendantsTagInfo[`${key}`])
 
-        // let ACTION_TAGS = ['單位', '職稱', '身份', '法條']
+        //  ACTION_TAGS = ['單位', '職稱', '身份', '法條']
         let units = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'單位'}`])
         let positions = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'職稱'}`])
         let identities = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'身份'}`])
