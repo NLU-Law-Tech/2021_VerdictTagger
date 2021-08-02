@@ -8,7 +8,7 @@ let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
 
 //開發模式下，API_SERVER打到測試後端，production(build之後)
 if (process.env.NODE_ENV !== 'production' && REACT_APP_LOCAL_MODE === 'FALSE') {
-    API_SERVER = 'http://140.120.13.245:9489'
+    API_SERVER = 'http://140.120.182.90:9487'
     //140.120.182.90:9487
     //http://140.120.13.245:9489
     // API_SERVER = 'https://acf9b465017b.ngrok.io/verdicts'

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 //import { updateBankAccountsTagInfo } from './action'
 
 let ACTION_TAGS = ['持有人','銀行','分行']
-let HOT_KEYS = ['d','f','g']
+let HOT_KEYS = ['f','g','h']
 export class tagInfoBank extends Component {
     constructor(props) {
         super(props)
