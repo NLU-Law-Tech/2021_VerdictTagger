@@ -265,8 +265,9 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                 
             }
         }
-        console.log("JSON:")
-        console.log(api_labeled_data)
+        // console.log(api_labeled_data)
+        // console.log("JSON:")
+        // console.log(JSON.stringify( api_labeled_data))
         axios.post(API_SERVER+'/verdicts',api_labeled_data)
             .then((res) => {
                 //console.log(res)

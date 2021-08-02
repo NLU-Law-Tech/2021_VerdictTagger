@@ -127,17 +127,19 @@ export class index extends Component {
         var re_array
         if (reg_type==="bank")
         {   
-
+            // console.log("bank:",highlights)
             let re_bank=new RegExp("((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)(.{0,5})(帳號|帳戶|│)?(?:(?!年|元|月|萬|千|百|第)\\w)(.{0,11})(?:(?!年|元|月|萬|千|百|第|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{3,15}(.{0,9})(帳戶|存簿))|((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)+(.{0,20})(帳號|帳戶|局號|│|卡號)(.{0,10})(?:(?!年|元|月|萬|千|百|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百)\\w)[0-9]{3,15}(?:(?!年|元|月|萬|千|百)\\w)(號)?(帳戶)?(、)?[0-9]*)","g");
             re_array=cj_text.match(re_bank)
         }
         else if (reg_type==='phone')
         {
+            // console.log("phone:",highlights)
             let re_phone=new RegExp("(?:手機號|行動號|電話號|手機電|行動電|電|門|手){1}[碼話號機]{1}[之為]?[ 「]{0,2}([0-9]{4}[-─－—–]?[0-9]{3}[-─－—–]?[0-9]{3})(?:SIM)?[^0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A帳戶]{1}|[^編帳]{1}[^ 第0-9\uFF10-\uFF19a-z\uFF41-\uFF5AA-Z\uFF21-\uFF3A：、│警戶鑑字-]{1}[ ]{0,2}([0-9]{4}[-─－—–]?[0-9]{3}[-─－—–]?[0-9]{3})[ ]{0,2}[手機行動電話門號碼SIM」]{1,5}","g")
              re_array=cj_text.match(re_phone)
         }
         else if(reg_type=== 'car')
         {
+            // console.log("car:",highlights)
             let re_car=new RegExp("(牌照號碼|車牌號碼|車號|車牌)(號|為|：|:)?([a-zA-Z0-9]{1,5}[-─－—–][a-zA-Z0-9]{1,5})號?","g")
              re_array=cj_text.match(re_car)
         }
@@ -255,10 +257,31 @@ export class index extends Component {
         let { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
             { defendants } = SideMenuReducer,
             { unlabelDocHl } = TagReducer
-        
-        let cj_text_bank_hl = this.hightLightCJText(cj_text, "bank", unlabelDocHl)
-        let cj_text_car_hl = this.hightLightCJText(cj_text, "car", unlabelDocHl)
-        let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", unlabelDocHl)
+        let bank=[]
+        let phone=[]
+        let car=[]
+        // console.log(unlabelDocHl)
+        for( let i=0;i<unlabelDocHl.length;i++)
+        {
+            // console.log(unlabelDocHl[i])
+            if (unlabelDocHl[i].type==='bank')
+            {
+                bank.push(unlabelDocHl[i])
+            }
+            else if(unlabelDocHl[i].type==='phone')
+            {
+                phone.push(unlabelDocHl[i])
+            }
+            else if(unlabelDocHl[i].type==='car')
+            {
+                car.push(unlabelDocHl[i])
+            }
+
+        }
+
+        let cj_text_bank_hl = this.hightLightCJText(cj_text, "bank", bank)
+        let cj_text_car_hl = this.hightLightCJText(cj_text, "car", car)
+        let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", phone)
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
         // cj_text=cj_text.replace(/\\)/g,"\\)")
