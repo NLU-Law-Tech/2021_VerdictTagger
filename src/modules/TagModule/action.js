@@ -57,7 +57,9 @@ export const errorDoc = (doc_id,err_message) => {
         axios.post(API_SERVER + '/verdicts/error-report', error_doc)
             .then((res) => {
                 console.log(API_SERVER+'/verdicts/error-report')
-                alert("完成")
+                let message="錯誤回報完成"+",id: "+doc_id
+                console.log(message)
+                alert(message)
                 dispatch({type: 'TAG_ERROR_DOC_SUCCESS'})
             })
             .catch((error) => {
