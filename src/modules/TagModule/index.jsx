@@ -168,6 +168,7 @@ export class index extends Component {
                         hlText=hlText.replace(certain_text,`<span>${certain_text}</span>`)
                         // console.log(hlText)
                         cj_text = cj_text.replace(re,hlText)
+                        highlights[i].value='hight_finished'
                     }
                 }
             }
