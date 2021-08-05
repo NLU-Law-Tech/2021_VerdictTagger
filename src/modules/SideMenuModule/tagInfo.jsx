@@ -27,7 +27,7 @@ export class tagInfo extends Component {
        
         let { tagAction } = state
         // let { dispatch } = props
-        console.log('currentSelect:',currentSelectWord)
+        // console.log('currentSelect:',currentSelectWord)
         // 被告變動
         let defendantsTagInfo = state.defendantsTagInfo
         

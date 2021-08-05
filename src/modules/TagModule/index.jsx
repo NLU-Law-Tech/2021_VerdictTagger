@@ -124,7 +124,12 @@ export class index extends Component {
     }
 
     hightLightCJText = (cj_text, reg_type,highlights) => {
+        highlights.sort(function (a, b) {
+            console.log(a.value.length,b.value.length)
+            return b.value.length - a.value.length;
+            });
         var re_array
+        console.log(reg_type,':', highlights)
         if (reg_type==="bank")
         {   
             // console.log("bank:",highlights)
@@ -158,7 +163,7 @@ export class index extends Component {
                     // console.log('--------------')
                     // console.log(highlights[i])
                     // console.log('---------------')
-                    if(contain===true)
+                    if(contain===true && highlights[i].type===reg_type)
                     
                     {
                         var certain_text=highlights[i].value
@@ -168,7 +173,8 @@ export class index extends Component {
                         hlText=hlText.replace(certain_text,`<span>${certain_text}</span>`)
                         // console.log(hlText)
                         cj_text = cj_text.replace(re,hlText)
-                        highlights[i].value='hight_finished'
+                        
+                        
                     }
                 }
             }
@@ -279,10 +285,11 @@ export class index extends Component {
             }
 
         }
-
+        console.log('-------------------------')
         let cj_text_bank_hl = this.hightLightCJText(cj_text, "bank", bank)
-        let cj_text_car_hl = this.hightLightCJText(cj_text, "car", car)
         let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", phone)
+        let cj_text_car_hl = this.hightLightCJText(cj_text, "car", car)
+        console.log('-------------------------')
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
         // cj_text=cj_text.replace(/\\)/g,"\\)")
@@ -321,23 +328,23 @@ export class index extends Component {
                             }}
                         />
 
-                        {/* 身份HL */}
-                        <TagBlockFront
-                           fontSize={`${fontSize}px`}
-                           markColor={'cyan'}
-                           opacity={'0.25'}
-                           dangerouslySetInnerHTML={{
-                               __html: cj_text_car_hl
-                           }}
-                        />
-
-                        {/* 職稱HL */}
+                        {/* 手機HL */}
                         <TagBlockFront
                            fontSize={`${fontSize}px`}
                            markColor={'green'}
                            opacity={'0.25'}
                            dangerouslySetInnerHTML={{
                                __html: cj_text_phone_hl
+                           }}
+                        />
+
+                        {/* 車牌HL */}
+                        <TagBlockFront
+                           fontSize={`${fontSize}px`}
+                           markColor={'cyan'}
+                           opacity={'0.25'}
+                           dangerouslySetInnerHTML={{
+                               __html: cj_text_car_hl
                            }}
                         />
 
