@@ -108,6 +108,40 @@ export const getUnlabelDoc = () => {
             })
     }
 }
+export const getSearchDoc = (doc_id) => {
+    console.log(doc_id)
+   return(dispatch)=>{
+    axios.get(API_SERVER+'/verdicts/'+doc_id,{headers: {"Access-Control-Allow-Origin": "*"}})////"/unlabel_doc id" ,{headers: {"Access-Control-Allow-Origin": "*"}}
+    .then((res) => {
+        //後端input的JSON 直接抓欄位
+        
+        let content_id=res.data._id
+        let judgement=res.data.judgement
+        let highlight=res.data.highlight
+      
+         
+        dispatch({
+             type: "TAG_GET_UNLABEL_DOC_SUCCESS",
+             unlabelDocHl: highlight,
+            unlabelDocId: content_id,
+           unlabelDoc:judgement ,
+        })
+    })
+    .catch((error) => {
+         console.log(error.response)
+        let { response = {} } = error,
+            { status = -1 } = response
+        if (status === 403) {
+            alert("無可標記文件")
+        }
+        else if (status === -1) {
+            alert("找不到對應判決書")
+            
+        }
+    })
+
+   }
+}
 
 const _changeObjectKey2Api = (oriObjects) => {
        let oriObject=oriObjects[0]

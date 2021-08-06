@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, downloadLabeledDoc } from './action'
+import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, downloadLabeledDoc,getSearchDoc } from './action'
 import LocalUpload from './localUpload'
 
 const TagBlockFront = styled.pre`
@@ -198,13 +198,29 @@ export class index extends Component {
             console.warn("saveLabeldData error,rule not pass", unlabelDocId, defendantsTagInfo)
         }
     }
+     
 
+    
+    getSearchDoc= () => {
+        // let { dispatch } = this.props,
+        //     { TagReducer = {} } = this.props.state,
+        //     { unlabelDocId = '' } = TagReducer
+        // dispatch(delDoc(unlabelDocId))
+        var doc_id=prompt("請輸入判決書id")
+        if(doc_id!=="" && doc_id!==null){
+            let { dispatch } = this.props
+            dispatch(getSearchDoc(doc_id))    
+        }
+        else{
+            alert("您尚未輸入 請重新輸入一次")
+        }
+    }
 
     requestUnlabelDoc = () => {
         let { dispatch } = this.props
         dispatch(getUnlabelDoc())
     }
-
+  
     setFontSize = (newSize) => {
         this.setState({
             fontSize: newSize
@@ -312,6 +328,8 @@ export class index extends Component {
                 <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
                 <button className="mr-1" onClick={this.getNextDoc}>下一篇(n)</button>
                 {/* <button className="mr-1" onClick={this.exportLabeledDoc}>匯出本篇標註結果(t)</button> */}
+                {/* <input  type="text" className="mr-1"  placeholder="輸入doc_id" name='searchDoc_id' onChange={this.handleInputChange} ></input> */}
+                <button className="mr-1" onClick={this.getSearchDoc} >以判決書id搜尋</button>
                 <button className="float-right btn-danger" onClick={this.errorDocOnclick}>回報本篇錯誤</button>
                 <hr />
                 {cj_text === '' ?
