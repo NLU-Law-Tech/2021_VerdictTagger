@@ -125,7 +125,6 @@ export class index extends Component {
 
     hightLightCJText = (cj_text, reg_type,highlights) => {
         highlights.sort(function (a, b) {
-            console.log(a.value.length,b.value.length)
             return b.value.length - a.value.length;
             });
         var re_array
