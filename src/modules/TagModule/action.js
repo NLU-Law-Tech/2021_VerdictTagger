@@ -229,7 +229,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
                    
     
                 let ownerPostion=_changeOwnerKey2Api(bankAccountsTagInfo[`${key}`][`${'持有人'}`])
-                let bank=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
+                let bank=_changeOwnerKey2Api(bankAccountsTagInfo[`${key}`][`${'銀行'}`])
                 let branch=_changeObjectKey2Api(bankAccountsTagInfo[`${key}`][`${'分行'}`])
                 let bankNumber ='',nStart='',nEnd=''
                 let i
@@ -314,8 +314,8 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
             }
         }
         // console.log(api_labeled_data)
-        // console.log("JSON:")
-        // console.log(JSON.stringify( api_labeled_data))
+         console.log("JSON:")
+         console.log(JSON.stringify( api_labeled_data))
         axios.post(API_SERVER+'/verdicts',api_labeled_data)
             .then((res) => {
                 //console.log(res)
