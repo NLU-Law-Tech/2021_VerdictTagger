@@ -33,6 +33,7 @@ function Reducer(state = initialState, action) {
         unlabelDocId: action.unlabelDocId,
         unlabelDoc: action.unlabelDoc,
         unlabelDocHl:action.unlabelDocHl,
+        regex_word:action.regex_word,
         ready:true
       })
 

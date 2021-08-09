@@ -81,17 +81,19 @@ export const getUnlabelDoc = () => {
         axios.get(API_SERVER+'/verdicts',{headers: {"Access-Control-Allow-Origin": "*"}})////"/unlabel_doc id" ,{headers: {"Access-Control-Allow-Origin": "*"}}
             .then((res) => {
                 //後端input的JSON 直接抓欄位
-                
                 let content_id=res.data._id
                 let judgement=res.data.judgement
                 let highlight=res.data.highlight
+                let regex_word=res.data.regex.matches
+                
               
                  
                 dispatch({
                      type: "TAG_GET_UNLABEL_DOC_SUCCESS",
                      unlabelDocHl: highlight,
-                    unlabelDocId: content_id,
-                   unlabelDoc:judgement ,
+                     unlabelDocId: content_id,
+                     unlabelDoc:judgement ,
+                     regex_word:regex_word,
                 })
             })
             .catch((error) => {
@@ -118,6 +120,7 @@ export const getSearchDoc = (doc_id) => {
         let content_id=res.data._id
         let judgement=res.data.judgement
         let highlight=res.data.highlight
+        let regex_word=res.data.regex.matches
       
          
         dispatch({
@@ -125,6 +128,7 @@ export const getSearchDoc = (doc_id) => {
              unlabelDocHl: highlight,
             unlabelDocId: content_id,
            unlabelDoc:judgement ,
+           regex_word:regex_word,
         })
     })
     .catch((error) => {

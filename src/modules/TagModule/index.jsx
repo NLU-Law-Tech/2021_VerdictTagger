@@ -128,7 +128,6 @@ export class index extends Component {
             return b.value.length - a.value.length;
             });
         var re_array
-        console.log(reg_type,':', highlights)
         if (reg_type==="bank")
         {   
             // console.log("bank:",highlights)
@@ -276,13 +275,40 @@ export class index extends Component {
 
         let { cj_text, fontSize } = this.state
         // console.log(this.props.state)
-        let { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
-            { defendants } = SideMenuReducer,
-            { unlabelDocHl } = TagReducer
+        let {TagReducer = {} } = this.props.state,
+            { unlabelDocHl } = TagReducer,
+            {regex_word}=TagReducer
         let bank=[]
         let phone=[]
         let car=[]
-        // console.log(unlabelDocHl)
+        var regex_phone_count=0
+        var regex_bank_count=0
+        var regex_car_count=0
+        var regex_length=0
+        console.log("-------------------")
+        console.log("用正則抓下來的")
+        console.log(regex_word)
+        console.log("-------------------")
+        if(regex_word!==undefined){
+            regex_length=regex_word.length
+        }
+        for( let i=0;i<regex_length;i++)
+        {
+            // console.log(unlabelDocHl[i])
+            if (regex_word[i].type==='bank')
+            {
+                regex_bank_count++
+            }
+            else if(regex_word[i].type==='phone')
+            {
+                regex_phone_count++
+            }
+            else if(unlabelDocHl[i].type==='car')
+            {
+                regex_car_count++
+            }
+
+        }
         for( let i=0;i<unlabelDocHl.length;i++)
         {
             // console.log(unlabelDocHl[i])
@@ -300,11 +326,9 @@ export class index extends Component {
             }
 
         }
-        console.log('-------------------------')
         let cj_text_bank_hl = this.hightLightCJText(cj_text, "bank", bank)
         let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", phone)
         let cj_text_car_hl = this.hightLightCJText(cj_text, "car", car)
-        console.log('-------------------------')
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
         // cj_text=cj_text.replace(/\\)/g,"\\)")
@@ -322,6 +346,7 @@ export class index extends Component {
                     <label htmlFor="">font-size:{fontSize}&nbsp;&nbsp;</label>
                     <button className="mr-1" onClick={() => { this.setFontSize(fontSize + 1) }}> + </button>
                     <button onClick={() => { this.setFontSize(fontSize - 1) }}> - </button>
+                    預計正則抓下來{regex_bank_count}個銀行,{regex_phone_count}個電話,{regex_car_count}個車牌
                 </div>
                 <hr />
                 <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
@@ -330,6 +355,7 @@ export class index extends Component {
                 {/* <input  type="text" className="mr-1"  placeholder="輸入doc_id" name='searchDoc_id' onChange={this.handleInputChange} ></input> */}
                 <button className="mr-1" onClick={this.getSearchDoc} >以判決書id搜尋</button>
                 <button className="float-right btn-danger" onClick={this.errorDocOnclick}>回報本篇錯誤</button>
+
                 <hr />
                 {cj_text === '' ?
                     <small>載入中</small>
