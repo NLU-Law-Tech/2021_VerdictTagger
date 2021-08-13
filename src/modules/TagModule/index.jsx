@@ -272,7 +272,6 @@ export class index extends Component {
     }
 
     render() {
-
         let { cj_text, fontSize } = this.state
         // console.log(this.props.state)
         let {TagReducer = {} } = this.props.state,
@@ -285,31 +284,31 @@ export class index extends Component {
         var regex_bank_count=0
         var regex_car_count=0
         var regex_length=0
+        
+        console.log("-------------------")
+        console.log("用正則抓下來的")
+        console.log(regex_word)
+        console.log("-------------------")
+        regex_length=regex_word.length
+        for( let i=0;i<regex_length;i++)
+        {
+            
+            // console.log(unlabelDocHl[i])
+            if (regex_word[i].type==='bank')
+            {
+                regex_bank_count++
+            }
+            else if(regex_word[i].type==='phone')
+            {
+                regex_phone_count++
+            }
+            else if(unlabelDocHl[i].type==='car')
+            {
+                regex_car_count++
+            }
 
-        // if(regex_word!==undefined){
-        //     console.log("-------------------")
-        //     console.log("用正則抓下來的")
-        //     console.log(regex_word)
-        //     console.log("-------------------")
-        //     regex_length=regex_word.length
-        //     for( let i=0;i<regex_length;i++)
-        // {
-        //     // console.log(unlabelDocHl[i])
-        //     if (regex_word[i].type==='bank')
-        //     {
-        //         regex_bank_count++
-        //     }
-        //     else if(regex_word[i].type==='phone')
-        //     {
-        //         regex_phone_count++
-        //     }
-        //     else if(unlabelDocHl[i].type==='car')
-        //     {
-        //         regex_car_count++
-        //     }
-
-        // }
-        // }
+        }
+        
         
         for( let i=0;i<unlabelDocHl.length;i++)
         {
@@ -348,7 +347,7 @@ export class index extends Component {
                     <label htmlFor="">font-size:{fontSize}&nbsp;&nbsp;</label>
                     <button className="mr-1" onClick={() => { this.setFontSize(fontSize + 1) }}> + </button>
                     <button onClick={() => { this.setFontSize(fontSize - 1) }}> - </button>
-                    {/* 預計正則抓下來{regex_bank_count}個銀行,{regex_phone_count}個電話,{regex_car_count}個車牌 */}
+                    預計正則抓下來{regex_bank_count}個銀行,{regex_phone_count}個電話,{regex_car_count}個車牌
                 </div>
                 <hr />
                 <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
