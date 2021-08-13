@@ -291,8 +291,7 @@ export class index extends Component {
         console.log("-------------------")
         if(regex_word!==undefined){
             regex_length=regex_word.length
-        }
-        for( let i=0;i<regex_length;i++)
+            for( let i=0;i<regex_length;i++)
         {
             // console.log(unlabelDocHl[i])
             if (regex_word[i].type==='bank')
@@ -309,6 +308,8 @@ export class index extends Component {
             }
 
         }
+        }
+        
         for( let i=0;i<unlabelDocHl.length;i++)
         {
             // console.log(unlabelDocHl[i])
