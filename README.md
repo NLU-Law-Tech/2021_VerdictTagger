@@ -3,7 +3,21 @@
 
 [使用者指南](https://hackmd.io/0nrrMc5NQRKxlZZVkwmD7w)
 
+## 安裝套件&開發與建置專案
+clone下來之後安裝NPM([環境及IDE可參考這](https://ithelp.ithome.com.tw/articles/10214942))
 
+```
+npm install
+```
+編譯後在local端查看(測試):
+```
+npm start
+```
+開發完成後，在專案目錄下執行:
+```
+npm run build
+```
+會產生一個dist目錄，為後端on在server所需要之檔案
 
 ## ENV mode
 ```
