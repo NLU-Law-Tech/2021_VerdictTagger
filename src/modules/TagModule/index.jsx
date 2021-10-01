@@ -289,26 +289,6 @@ export class index extends Component {
         console.log("用正則抓下來的")
         console.log(regex_word)
         console.log("-------------------")
-        regex_length=regex_word.length
-        for( let i=0;i<regex_length;i++)
-        {
-            
-            // console.log(unlabelDocHl[i])
-            if (regex_word[i].type==='bank')
-            {
-                regex_bank_count++
-            }
-            else if(regex_word[i].type==='phone')
-            {
-                regex_phone_count++
-            }
-            else if(unlabelDocHl[i].type==='car')
-            {
-                regex_car_count++
-            }
-
-        }
-        
         
         for( let i=0;i<unlabelDocHl.length;i++)
         {
