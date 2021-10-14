@@ -4,9 +4,9 @@
 [使用者指南](https://hackmd.io/0nrrMc5NQRKxlZZVkwmD7w)
 
 ## 下載
-- [windows]()
-- [ubuntu]()
-- [macos]()
+- [windows](https://github.com/NLU-Law-Tech/2021_VerdictTagger/releases/tag/windows-latest-latest)
+- [ubuntu](https://github.com/NLU-Law-Tech/2021_VerdictTagger/releases/tag/ubuntu-latest-latest)
+- [macos](https://github.com/NLU-Law-Tech/2021_VerdictTagger/releases/tag/macos-latest-latest)
 > 我們沒有釋出Apple Silicon版本，但是您可以自行編譯 
 
 ## 編譯
