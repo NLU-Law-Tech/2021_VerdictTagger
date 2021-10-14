@@ -1,5 +1,4 @@
 import { initApp } from '../action'
-import { setDefendants, updateDefendantsTagInfo } from '../SideMenuModule/action'
 
 const axios = require('axios');
 
@@ -55,9 +54,9 @@ export const errorDoc = (doc_id,err_message) => {
     
     return(dispatch) => {
         axios.post(API_SERVER + '/verdicts/error-report', error_doc)
-            .then((res) => {
+            .then(() => {
                 console.log(API_SERVER+'/verdicts/error-report')
-                let message="錯誤回報完成"+",id: "+doc_id
+                let message="錯誤回報完成,id: "+doc_id
                 console.log(message)
                 alert(message)
                 dispatch({type: 'TAG_ERROR_DOC_SUCCESS'})

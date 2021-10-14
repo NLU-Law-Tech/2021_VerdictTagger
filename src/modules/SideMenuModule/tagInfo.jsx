@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import defendant from './defendant'
-
 
 let ACTION_TAGS = ['持有人', '車種']
 let HOT_KEYS = ['e', 'r']

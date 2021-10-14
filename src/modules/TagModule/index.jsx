@@ -40,7 +40,6 @@ export class index extends Component {
 
 
     componentDidMount() {
-        const parseUrl = require("parse-url")
         let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'FALSE') {
             this.requestUnlabelDoc()
@@ -258,7 +257,7 @@ export class index extends Component {
         var regex_phone_count = 0
         var regex_bank_count = 0
         var regex_car_count = 0
-        var regex_length = 0
+        // var regex_length = 0
 
         console.log("-------------------")
         console.log("用正則抓下來的")
