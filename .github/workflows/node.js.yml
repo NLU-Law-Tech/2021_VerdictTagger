@@ -27,8 +27,8 @@ jobs:
      - uses: "marvinpinto/action-automatic-releases@latest"
        with:
           repo_token: "${{ secrets.ACCESS_TOKEN }}"
-          automatic_release_tag: "${{matrix.os}}-latest"
+          automatic_release_tag: "${{matrix.os}}"
           prerelease: false
-          title: "${{matrix.os}}-latest"
+          title: "${{matrix.os}}"
           files: |
             dist/*
