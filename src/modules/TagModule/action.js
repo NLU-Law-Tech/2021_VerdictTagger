@@ -338,40 +338,7 @@ export const saveLabeledData = (unlabelDocId, defendantsTagInfo,bankAccountsTagI
 }
 
 
-export const downloadLabeledDoc = (unlabelDocId, unlabelDoc, defendantsTagInfo) => {
-    console.log(unlabelDocId, defendantsTagInfo)
-    let defendantsTagInfoKeys = Object.keys(defendantsTagInfo)
-
-    let api_labeled_data = []
-    defendantsTagInfoKeys.forEach((key) => {
-        console.log(defendantsTagInfo[`${key}`])
-
-        //  ACTION_TAGS = ['單位', '職稱', '身份', '法條']
-        let units = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'單位'}`])
-        let positions = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'職稱'}`])
-        let identities = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'身份'}`])
-        let laws = _changeObjectKey2Api(defendantsTagInfo[`${key}`][`${'法條'}`])
-
-        api_labeled_data.push({
-            name: {
-                content: key,
-                start: 0,
-                end: 0
-            },
-            units,
-            positions,
-            identities,
-            laws
-        })
-    })
-
-    let apiObject = {
-        doc_id: unlabelDocId,
-        full_doc: unlabelDoc,
-        labeled_data: api_labeled_data
-    }
-    console.log(apiObject)
-
+export const downloadLabeledDoc = (unlabelDocId, data) => {
     const downloadFile = async (fine_name,myData) => {
         const fileName = fine_name.replace(/\..{1,6}$/,"");
         const json = JSON.stringify(myData);
@@ -385,7 +352,7 @@ export const downloadLabeledDoc = (unlabelDocId, unlabelDoc, defendantsTagInfo) 
         document.body.removeChild(link);
     }
 
-    downloadFile(unlabelDocId,apiObject)
+    downloadFile(unlabelDocId,data)
 
     return {
         type: 'TAG_DOWNLOAD_LABLE_DOC'

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, downloadLabeledDoc,getSearchDoc } from './action'
+import { saveLabeledData as saveLabledDataAction, submitTag, getUnlabelDoc, errorDoc, downloadLabeledDoc, getSearchDoc } from './action'
 import LocalUpload from './localUpload'
 
 const TagBlockFront = styled.pre`
@@ -44,7 +44,7 @@ export class index extends Component {
         let { REACT_APP_LOCAL_MODE = 'FALSE' } = process.env
         if (REACT_APP_LOCAL_MODE === 'FALSE') {
             this.requestUnlabelDoc()
-            
+
         }
         else {
             // this.inputOpenFileRef.current.click()
@@ -69,25 +69,29 @@ export class index extends Component {
         //     { TagReducer = {} } = this.props.state,
         //     { unlabelDocId = '' } = TagReducer
         // dispatch(delDoc(unlabelDocId))
-        var whyWrong=prompt("請輸入此篇判決書出錯的原因")
-        if(whyWrong!=="" && whyWrong!==null){
+        var whyWrong = prompt("請輸入此篇判決書出錯的原因")
+        if (whyWrong !== "" && whyWrong !== null) {
             let { dispatch } = this.props,
                 { TagReducer = {} } = this.props.state,
                 { unlabelDocId = '' } = TagReducer
-            dispatch(errorDoc(unlabelDocId,whyWrong))    
+            dispatch(errorDoc(unlabelDocId, whyWrong))
         }
-        else{
+        else {
             alert("您尚未輸入 請重新輸入一次")
         }
     }
 
     exportLabeledDoc = () => {
-        let { dispatch } = this.props
-        let { SideMenuReducer,TagReducer } = this.props.state,
-            { defendantsTagInfo } = SideMenuReducer,
-            { unlabelDocId = '',unlabelDoc } = TagReducer
-        
-        dispatch(downloadLabeledDoc(unlabelDocId,unlabelDoc,defendantsTagInfo))
+        let { dispatch } = this.props,
+            { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
+            { defendantsTagInfo, phoneNumbersTagInfo, bankAccountsTagInfo } = SideMenuReducer,
+            { unlabelDocId = '' } = TagReducer
+
+        dispatch(downloadLabeledDoc(unlabelDocId, {
+            defendantsTagInfo,
+            phoneNumbersTagInfo,
+            bankAccountsTagInfo
+        }))
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -123,61 +127,35 @@ export class index extends Component {
         }
     }
 
-    hightLightCJText = (cj_text, reg_type,highlights) => {
+    hightLightCJText = (cj_text, reg_type, highlights) => {
         highlights.sort(function (a, b) {
             return b.value.length - a.value.length;
-            });
+        });
         var re_array
-        if (reg_type==="bank")
-        {   
+        if (reg_type === "bank") {
             // console.log("bank:",highlights)
-            let re_bank=new RegExp("((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)(.{0,5})(帳號|帳戶|│)?(?:(?!年|元|月|萬|千|百|第)\\w)(.{0,11})(?:(?!年|元|月|萬|千|百|第|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{3,15}(.{0,9})(帳戶|存簿))|((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)+(.{0,20})(帳號|帳戶|局號)(.{0,10})(?:(?!年|元|月|萬|千|百|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百)\\w)[0-9]{3,15}(?:(?!年|元|月|萬|千|百)\\w)(號)?(帳戶)?(、)?[0-9]*)","g");
-            re_array=cj_text.match(re_bank)
+            let re_bank = new RegExp("((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)(.{0,5})(帳號|帳戶|│)?(?:(?!年|元|月|萬|千|百|第)\\w)(.{0,11})(?:(?!年|元|月|萬|千|百|第|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百|第)\\w)[0-9]{3,15}(.{0,9})(帳戶|存簿))|((.{0,4})(銀行|郵局|郵政|信託|世華|金庫|商銀|企銀|開發|信合社|漁會|農會|信用合作社|中央信託局)+(.{0,20})(帳號|帳戶|局號)(.{0,10})(?:(?!年|元|月|萬|千|百|密碼)\\w)[0-9]{0,4}(-|─|－|—|–)?(?:(?!年|元|月|萬|千|百)\\w)[0-9]{3,15}(?:(?!年|元|月|萬|千|百)\\w)(號)?(帳戶)?(、)?[0-9]*)", "g");
+            re_array = cj_text.match(re_bank)
         }
-        else if (reg_type==='phone')
-        {
+        else if (reg_type === 'phone') {
             // console.log("phone:",highlights)
-            let re_phone=new RegExp("(?:手機號碼|行動號碼|電話號碼|手機電話|行動電話|門號|手機){1}(?:之|為|確為|:|：)?[ 「]{0,2}([0-9○]{4}[-─－—–]?[0-9○]{3}[-─－—–]?[0-9○]{3})(?:SIM)?|[ ]{0,2}([0-9○]{4}[-─－—–]?[0-9○]{3}[-─－—–]?[0-9○]{3})[ 」]{0,2}(?:之)?(?:號行動電話|號SIM|號手機|號電話|號門號|行動電話|手機|電話|門號){1}","g")
-             re_array=cj_text.match(re_phone)
+            let re_phone = new RegExp("(?:手機號碼|行動號碼|電話號碼|手機電話|行動電話|門號|手機){1}(?:之|為|確為|:|：)?[ 「]{0,2}([0-9○]{4}[-─－—–]?[0-9○]{3}[-─－—–]?[0-9○]{3})(?:SIM)?|[ ]{0,2}([0-9○]{4}[-─－—–]?[0-9○]{3}[-─－—–]?[0-9○]{3})[ 」]{0,2}(?:之)?(?:號行動電話|號SIM|號手機|號電話|號門號|行動電話|手機|電話|門號){1}", "g")
+            re_array = cj_text.match(re_phone)
         }
-        else if(reg_type=== 'car')
-        {
+        else if (reg_type === 'car') {
             // console.log("car:",highlights)
-            let re_car=new RegExp("(牌照號碼|車牌號碼|車號|車牌)(號|為|：|:)?([a-zA-Z0-9]{1,5}[-─－—–][a-zA-Z0-9]{1,5})號?","g")
-             re_array=cj_text.match(re_car)
+            let re_car = new RegExp("(牌照號碼|車牌號碼|車號|車牌)(號|為|：|:)?([a-zA-Z0-9]{1,5}[-─－—–][a-zA-Z0-9]{1,5})號?", "g")
+            re_array = cj_text.match(re_car)
         }
-        if (re_array === null || highlights === undefined)
-        {
+        if (re_array === null || highlights === undefined) {
             return;
         }
-        
-        re_array.forEach((hlText) => {
-            if (hlText !== '') {
-                let new_hlText = hlText.replace(/\)/g, '\\)')
-                let re = new RegExp(new_hlText, "g");
-                for(var i=0;i<highlights.length;i++)
-                {
-                    let contain=hlText.includes(highlights[i].value)
-                    // console.log('--------------')
-                    // console.log(highlights[i])
-                    // console.log('---------------')
-                    if(contain===true && highlights[i].type===reg_type)
-                    
-                    {
-                        var certain_text=highlights[i].value
-                        // console.log("contains",certain_text)
-                        // console.log(hlText)
-                        // console.log('------------------')
-                        hlText=hlText.replace(certain_text,`<span>${certain_text}</span>`)
-                        // console.log(hlText)
-                        cj_text = cj_text.replace(re,hlText)
-                        
-                        
-                    }
-                }
-            }
+
+        re_array.forEach((match) => {
+            console.log(match)
+            cj_text = cj_text.replace(match, `<span>${match}</span>`)
         })
-        
+
         return cj_text
     }
 
@@ -185,31 +163,28 @@ export class index extends Component {
         // eslint-disable-next-line
         let { dispatch } = this.props,
             { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
-            { defendantsTagInfo, phoneNumbersTagInfo,bankAccountsTagInfo} = SideMenuReducer,
+            { defendantsTagInfo, phoneNumbersTagInfo, bankAccountsTagInfo } = SideMenuReducer,
             { unlabelDocId = '' } = TagReducer
         //console.log('save ->', defendantsTagInfo,phoneNumbersTagInfo,bankAccountsTagInfo)
-        if (unlabelDocId !== '' && (Object.keys(defendantsTagInfo).length > 0||Object.keys(bankAccountsTagInfo).length > 0||Object.keys(phoneNumbersTagInfo).length > 0)) {
-            dispatch(saveLabledDataAction(unlabelDocId, defendantsTagInfo,bankAccountsTagInfo,phoneNumbersTagInfo))
+        if (unlabelDocId !== '' && (Object.keys(defendantsTagInfo).length > 0 || Object.keys(bankAccountsTagInfo).length > 0 || Object.keys(phoneNumbersTagInfo).length > 0)) {
+            console.log(unlabelDocId, defendantsTagInfo, bankAccountsTagInfo, phoneNumbersTagInfo)
+            dispatch(saveLabledDataAction(unlabelDocId, defendantsTagInfo, bankAccountsTagInfo, phoneNumbersTagInfo))
         }
         else {
             alert("saveLabeldData error,rule not pass")
             console.warn("saveLabeldData error,rule not pass", unlabelDocId, defendantsTagInfo)
         }
     }
-     
 
-    
-    getSearchDoc= () => {
-        // let { dispatch } = this.props,
-        //     { TagReducer = {} } = this.props.state,
-        //     { unlabelDocId = '' } = TagReducer
-        // dispatch(delDoc(unlabelDocId))
-        var doc_id=prompt("請輸入判決書id")
-        if(doc_id!=="" && doc_id!==null){
+
+
+    getSearchDoc = () => {
+        var doc_id = prompt("請輸入判決書id")
+        if (doc_id !== "" && doc_id !== null) {
             let { dispatch } = this.props
-            dispatch(getSearchDoc(doc_id))    
+            dispatch(getSearchDoc(doc_id))
         }
-        else{
+        else {
             alert("您尚未輸入 請重新輸入一次")
         }
     }
@@ -218,7 +193,7 @@ export class index extends Component {
         let { dispatch } = this.props
         dispatch(getUnlabelDoc())
     }
-  
+
     setFontSize = (newSize) => {
         this.setState({
             fontSize: newSize
@@ -274,41 +249,38 @@ export class index extends Component {
     render() {
         let { cj_text, fontSize } = this.state
         // console.log(this.props.state)
-        let {TagReducer = {} } = this.props.state,
-            { unlabelDocHl } = TagReducer,
-            {regex_word}=TagReducer
-        let bank=[]
-        let phone=[]
-        let car=[]
-        var regex_phone_count=0
-        var regex_bank_count=0
-        var regex_car_count=0
-        var regex_length=0
-        
+        let { TagReducer = {} } = this.props.state,
+            { unlabelDocHl = [] } = TagReducer,
+            { regex_word } = TagReducer
+        let bank = []
+        let phone = []
+        let car = []
+        var regex_phone_count = 0
+        var regex_bank_count = 0
+        var regex_car_count = 0
+        var regex_length = 0
+
         console.log("-------------------")
         console.log("用正則抓下來的")
         console.log(regex_word)
         console.log("-------------------")
-        
-        for( let i=0;i<unlabelDocHl.length;i++)
-        {
+
+        for (let i = 0; i < unlabelDocHl.length; i++) {
             // console.log(unlabelDocHl[i])
-            if (unlabelDocHl[i].type==='bank')
-            {
+            if (unlabelDocHl[i].type === 'bank') {
                 bank.push(unlabelDocHl[i])
             }
-            else if(unlabelDocHl[i].type==='phone')
-            {
+            else if (unlabelDocHl[i].type === 'phone') {
                 phone.push(unlabelDocHl[i])
             }
-            else if(unlabelDocHl[i].type==='car')
-            {
+            else if (unlabelDocHl[i].type === 'car') {
                 car.push(unlabelDocHl[i])
             }
 
         }
         let cj_text_bank_hl = this.hightLightCJText(cj_text, "bank", bank)
-        let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", phone)
+        let cj_text_phone_hl = this.hightLightCJText(cj_text, "phone", ['0936330116'])
+
         let cj_text_car_hl = this.hightLightCJText(cj_text, "car", car)
         // let cj_text_law_hl = this.hightLightCJText(cj_text, ['條', '項', '款'])
         // console.log(cj_text_hl)
@@ -330,13 +302,20 @@ export class index extends Component {
                     預計正則抓下來{regex_bank_count}個銀行,{regex_phone_count}個電話,{regex_car_count}個車牌
                 </div>
                 <hr />
-                <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
-                <button className="mr-1" onClick={this.getNextDoc}>下一篇(n)</button>
-                {/* <button className="mr-1" onClick={this.exportLabeledDoc}>匯出本篇標註結果(t)</button> */}
-                {/* <input  type="text" className="mr-1"  placeholder="輸入doc_id" name='searchDoc_id' onChange={this.handleInputChange} ></input> */}
-                <button className="mr-1" onClick={this.getSearchDoc} >以判決書id搜尋</button>
-                <button className="float-right btn-danger" onClick={this.errorDocOnclick}>回報本篇錯誤</button>
 
+                {REACT_APP_LOCAL_MODE === 'TRUE' ?
+                    <>
+                        <button className="mr-1" onClick={this.exportLabeledDoc}>匯出本篇標註結果(t)</button>
+                        <button className="mr-1" onClick={this.getNextDoc}>下一篇(n)</button>
+                    </>
+                    :
+                    <>
+                        <button className="mr-1" onClick={this.saveLabeldData}>儲存(s)</button>
+                        <button className="mr-1" onClick={this.getNextDoc}>下一篇(n)</button>
+                        <button className="mr-1" onClick={this.getSearchDoc} >以判決書id搜尋</button>
+                        <button className="float-right btn-danger" onClick={this.errorDocOnclick}>回報本篇錯誤</button>
+                    </>
+                }
                 <hr />
                 {cj_text === '' ?
                     <small>載入中</small>
@@ -354,22 +333,22 @@ export class index extends Component {
 
                         {/* 手機HL */}
                         <TagBlockFront
-                           fontSize={`${fontSize}px`}
-                           markColor={'green'}
-                           opacity={'0.25'}
-                           dangerouslySetInnerHTML={{
-                               __html: cj_text_phone_hl
-                           }}
+                            fontSize={`${fontSize}px`}
+                            markColor={'green'}
+                            opacity={'0.25'}
+                            dangerouslySetInnerHTML={{
+                                __html: cj_text_phone_hl
+                            }}
                         />
 
                         {/* 車牌HL */}
                         <TagBlockFront
-                           fontSize={`${fontSize}px`}
-                           markColor={'cyan'}
-                           opacity={'0.25'}
-                           dangerouslySetInnerHTML={{
-                               __html: cj_text_car_hl
-                           }}
+                            fontSize={`${fontSize}px`}
+                            markColor={'cyan'}
+                            opacity={'0.25'}
+                            dangerouslySetInnerHTML={{
+                                __html: cj_text_car_hl
+                            }}
                         />
 
                         {/* 法條HL */}
