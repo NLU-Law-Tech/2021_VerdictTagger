@@ -7,6 +7,10 @@ export class LocalUpload extends Component {
         this.inputOpenFileRef = React.createRef()
     }
 
+    componentDidMount(){
+        this.inputOpenFileRef.current.focus()
+    }
+
     onFileChange = e => { 
         e.preventDefault()
         let { dispatch } = this.props
