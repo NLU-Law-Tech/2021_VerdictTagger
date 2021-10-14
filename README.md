@@ -10,7 +10,7 @@
 > 我們沒有釋出Apple Silicon版本，但是您可以自行編譯 
 
 ## 編譯
-需要 [node](https://nodejs.org/en/) v16.x+
+需要 [node](https://nodejs.org/en/) v16.x
 ```sh
 npm install
 npm run dist
