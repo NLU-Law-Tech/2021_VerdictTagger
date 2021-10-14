@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import defendant from './defendant'
 
 
-let ACTION_TAGS = ['持有人','車種']
-let HOT_KEYS = ['e','r']
+let ACTION_TAGS = ['持有人', '車種']
+let HOT_KEYS = ['e', 'r']
 export class tagInfo extends Component {
     constructor(props) {
         super(props)
@@ -12,30 +12,30 @@ export class tagInfo extends Component {
             currentSelectWord: undefined,
             defendants: [],
             defendantsTagInfo: {},
-            
-            
-            tagAction:ACTION_TAGS[0],
+
+
+            tagAction: ACTION_TAGS[0],
             // firstUpdate:true
         }
     }
 
     static getDerivedStateFromProps(props, state) {
-        let { SideMenuReducer = {}, TagReducer={}, MainReducer } = props.state,
+        let { SideMenuReducer = {}, TagReducer = {}, MainReducer } = props.state,
             { defendants = [], currentSelectDefendant } = SideMenuReducer,
             { currentSelectWord } = TagReducer,
             { currentKeyDown } = MainReducer
-       
+
         let { tagAction } = state
         // let { dispatch } = props
         // console.log('currentSelect:',currentSelectWord)
         // 被告變動
         let defendantsTagInfo = state.defendantsTagInfo
-        
+
         if (defendants !== state.defendants) {
             // 檢查字典中是否已有初值，若無則新增
             for (let i = 0; i < defendants.length; i++) {
                 let defendant = defendants[i]
-                 
+
                 if (defendant in defendantsTagInfo !== true) {
                     defendantsTagInfo[`${defendant}`] = {}
                     ACTION_TAGS.forEach((ACTION_TAG) => {
@@ -53,27 +53,27 @@ export class tagInfo extends Component {
                 }
             }
         }
-         
-         
 
-       
+
+
+
 
         // 新選擇資訊進入
-        if(typeof (tagAction)==='undefined'){
-            var alert='請選擇項目再進行標記'
+        if (typeof (tagAction) === 'undefined') {
+            var alert = '請選擇項目再進行標記'
             console.log(alert)
-         }
-        else if (typeof (currentSelectDefendant) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
-            
-            defendantsTagInfo[`${currentSelectDefendant}`][`${state.tagAction}`].push(currentSelectWord)
         }
-        
-       
+        else if (typeof (currentSelectDefendant) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
+            defendantsTagInfo[`${currentSelectDefendant}`][`${state.tagAction}`].push(currentSelectWord)
+            tagAction = undefined
+        }
+
+
 
         // hot key
-        if(typeof (currentSelectDefendant) !== 'undefined' && currentKeyDown !== state.currentKeyDown){
+        if (typeof (currentSelectDefendant) !== 'undefined' && currentKeyDown !== state.currentKeyDown) {
             try {
-                if(HOT_KEYS.includes(currentKeyDown)){
+                if (HOT_KEYS.includes(currentKeyDown)) {
                     let actionIndex = HOT_KEYS.indexOf(currentKeyDown)
                     tagAction = ACTION_TAGS[actionIndex]
                 }
@@ -81,14 +81,14 @@ export class tagInfo extends Component {
                 console.log(error)
             }
         }
-       // console.log(defendantsTagInfo)
-       
+        // console.log(defendantsTagInfo)
+
         return {
             tagAction,
             currentKeyDown,
             defendants: [...defendants],
             currentSelectWord,
-            defendantsTagInfo:SideMenuReducer.defendantsTagInfo,
+            defendantsTagInfo: SideMenuReducer.defendantsTagInfo,
             _props: props
         }
     }
@@ -116,7 +116,7 @@ export class tagInfo extends Component {
         let { state = {} } = this.props,
             { SideMenuReducer = {} } = state,
             { currentSelectDefendant } = SideMenuReducer
-        
+
         return (
             <div className="card">
                 {typeof (currentSelectDefendant) === 'undefined' ?
@@ -135,19 +135,18 @@ export class tagInfo extends Component {
                             <small>標註動作:{tagAction}</small>
                         </div>
                         <div className="card-text">
-                            <button className="m-1 btn btn-sm btn-success" onClick={() => this.setTagAction(undefined)}>Done</button>
+                            <button className="m-1 btn btn-sm btn-warning" onClick={() => this.setTagAction(undefined)}>取消<b>標注動作</b></button><br />
                             {
-                            ACTION_TAGS.map((actionTag, index) => {
-                              
-                            
-                                return <button 
-                                key={index} 
-                                className={`m-1 btn btn-sm btn-secondary ${tagAction === actionTag ? 'active' : ''}`} 
-                                onClick={() => this.setTagAction(actionTag)}>{`${actionTag}(${HOT_KEYS[index]})`}</button>
-                            })}
+                                ACTION_TAGS.map((actionTag, index) => {
+                                    return <button
+                                        key={index}
+                                        className={`m-1 btn btn-sm btn-secondary ${tagAction === actionTag ? 'active' : ''}`}
+                                        onClick={() => this.setTagAction(actionTag)}>{`${actionTag}(${HOT_KEYS[index]})`}
+                                    </button>
+                                })}
                             <hr />
                             {ACTION_TAGS.map((actionTag, index) => {
-                                  
+
                                 return (
                                     <div key={index} className={`${tagAction === actionTag ? 'bg-light font-weight-bold' : ''}`}>
                                         {actionTag}

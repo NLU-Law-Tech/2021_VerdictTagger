@@ -60,6 +60,7 @@ export class tagInfoPhone extends Component {
          }
         else if (typeof (currentSelectPhoneNumber) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
             phoneNumbersTagInfo[`${currentSelectPhoneNumber}`][`${state.tagAction}`].push(currentSelectWord)
+            tagAction = undefined
         }
        
 
@@ -128,7 +129,7 @@ export class tagInfoPhone extends Component {
                             <small>標註動作:{tagAction}</small>
                         </div>
                         <div className="card-text">
-                            <button className="m-1 btn btn-sm btn-success" onClick={() => this.setTagAction(undefined)}>Done</button>
+                        <button className="m-1 btn btn-sm btn-warning" onClick={() => this.setTagAction(undefined)}>取消<b>標注動作</b></button><br />
                             {
                             ACTION_TAGS.map((actionTag, index) => {
                               

@@ -57,6 +57,7 @@ export class tagInfoBank extends Component {
          }
         else if (typeof (currentSelectBankAccount) !== 'undefined' && currentSelectWord !== state.currentSelectWord) {
             bankAccountsTagInfo[`${currentSelectBankAccount}`][`${state.tagAction}`].push(currentSelectWord)
+            tagAction = undefined
         }
 
         // hot key
@@ -125,7 +126,7 @@ export class tagInfoBank extends Component {
                             <small>標註動作:{tagAction}</small>
                         </div>
                         <div className="card-text">
-                        <button className="m-1 btn btn-sm btn-success" onClick={() => this.setTagAction(undefined)}>Done</button>
+                        <button className="m-1 btn btn-sm btn-warning" onClick={() => this.setTagAction(undefined)}>取消<b>標注動作</b></button><br />
                             {ACTION_TAGS.map((actionTag, index) => {
                                 return <button 
                                 key={index} 
