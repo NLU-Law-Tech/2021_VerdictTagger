@@ -25,7 +25,8 @@
   "main": "main.js",
   "scripts": {
     "pack": "electron-builder --dir",
-    "dist": "npm run e-build&electron-builder",
+    "dist-win": "npm run e-build-win&electron-builder",
+    "dist-mac": "npm run e-build-mac&electron-builder",
     "e-build-win": "set REACT_APP_LOCAL_MODE=TRUE&&rm -rf app-build&&npm run build&&mv build app-build",
     "e-build-mac": "export REACT_APP_LOCAL_MODE=TRUE&&rm -rf app-build&&npm run build&&mv build app-build",
     "e-start": "electron .",
