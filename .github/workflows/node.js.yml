@@ -14,22 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, ubuntu-latest, ubuntu-latest]
-        include:
-        - os: macos-latest
-          TARGET: x86_64-apple-darwin
-          COMPILER: clang
-          LINKER: clang
-
-        - os: ubuntu-latest
-          TARGET: armv7-unknown-linux-musleabihf
-          COMPILER: arm-linux-gnueabihf-gcc-5
-          LINKER: gcc-5-arm-linux-gnueabihf
-
-        - os: ubuntu-latest
-          TARGET: x86_64-unknown-linux-musl
-          COMPILER: gcc
-          LINKER: gcc
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
      - uses: actions/checkout@v1
      - name: Setup node
@@ -38,4 +23,4 @@ jobs:
           node-version: '16.x'
      - run: |
           npm install
-          npm run e-build-mac
+          npm run dist
