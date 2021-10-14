@@ -25,7 +25,7 @@ jobs:
           npm install
           npm run dist
      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
+       with:
           repo_token: "${{ secrets.ACCESS_TOKEN }}"
           automatic_release_tag: "${{matrix.os}}-latest"
           prerelease: false
