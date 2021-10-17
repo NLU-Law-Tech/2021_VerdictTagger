@@ -81,12 +81,43 @@ export class index extends Component {
     }
 
     exportLabeledDoc = () => {
+        const separate_postion_info_from_key = (data) => {
+            data = Object.assign({}, data)
+            for (const [key, value] of Object.entries(data)) {
+                let key_parse = key.split('_')
+                let position_info = key_parse.pop()
+                let new_key = key_parse.join('_')
+                // console.log(tag_info, position_info);
+                // console.log(position_info.split("E:"))
+
+                let [tag_start, tag_end] = position_info.split("E:")
+                tag_start = tag_start.replace("S:", "")
+                tag_start = parseInt(tag_start)
+                tag_end = parseInt(tag_end)
+
+                console.log(tag_start, tag_end)
+
+                //set new key
+                data[new_key] = Object.assign({}, value, {
+                    tag_start,
+                    tag_end
+                })
+                delete data[key]
+            }
+            return data
+        }
+
         let { dispatch } = this.props,
             { SideMenuReducer = {}, TagReducer = {} } = this.props.state,
             { defendantsTagInfo, phoneNumbersTagInfo, bankAccountsTagInfo } = SideMenuReducer,
-            { unlabelDocId = '' } = TagReducer
+            { unlabelDocId = '', unlabelDoc = '' } = TagReducer
+
+        defendantsTagInfo = separate_postion_info_from_key(defendantsTagInfo)
+        phoneNumbersTagInfo = separate_postion_info_from_key(phoneNumbersTagInfo)
+        bankAccountsTagInfo = separate_postion_info_from_key(bankAccountsTagInfo)
 
         dispatch(downloadLabeledDoc(unlabelDocId, {
+            unlabelDoc,
             defendantsTagInfo,
             phoneNumbersTagInfo,
             bankAccountsTagInfo
